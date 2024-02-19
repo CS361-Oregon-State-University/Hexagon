@@ -1,18 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="@color/white">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/profile_pic"
+            android:src="@drawable/locker"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_marginTop="5dp"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/button_id_Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/profile_settings"
+            android:textSize="40sp"
+            android:background="@drawable/background_border"
+            android:textAllCaps="false"
+            android:padding="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp">
+        </androidx.appcompat.widget.AppCompatButton>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/black"/>
+    <LinearLayout
+        android:id="@+id/today_workout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/muscles"
+            android:src="@drawable/muscles"/>
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/today_s_workout"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:textAlignment="center"/>
+        </LinearLayout>
+        <!-- I think Recycler view should be used here
+             so user could swipe their workouts-->
+        <TextView
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="1.Squats (5 x 5)"/>
+        <TextView
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="2.Push ups (5 x 5)"/>
+        <TextView
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="3.Pull ups (5 x 5)"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/black"/>
+    <LinearLayout
+        android:id="@+id/today_educational_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="5dp"
+                android:contentDescription="@string/profile_pic"
+                android:src="@drawable/clipboard"/>
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Today's lesson!"
+                android:textColor="@color/black"
+                android:textSize="30dp"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/profile_pic"
+            android:src="@drawable/pullup_lesson" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Click to see more!"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textAlignment="center"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:text="“You miss 100 percent of the shots you don't take.” —Wayne Gretzky "/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/black"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/FAQ_button"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentStart="true"
+            android:text="FAQ"
+            android:textSize="40sp"
+            android:textAllCaps="false"
+            android:padding="5dp"
+            android:background="@color/white"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp">
+        </androidx.appcompat.widget.AppCompatButton>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/support_button"
+            android:layout_alignParentEnd="true"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:text="Support"
+            android:textSize="40sp"
+            android:textAllCaps="false"
+            android:background="@color/white"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp">
+        </androidx.appcompat.widget.AppCompatButton>
+    </RelativeLayout>
+<!--    <Button-->
+<!--        android:id="@+id/btn_search"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:layout_marginHorizontal="8dp"-->
+<!--        style="?attr/materialButtonStyle"-->
+<!--        android:text="@string/search" />-->
+</LinearLayout>
