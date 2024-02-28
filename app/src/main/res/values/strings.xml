@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">Personal Home Workout Tracking Application</string>
-    <string name="profile_settings">Profile settings</string>
-    <string name="profile_pic">Profile pic</string>
-    <string name="today_s_workout">Today\'s workout!</string>
-    <string name="muscles">muscles</string>
-</resources>
