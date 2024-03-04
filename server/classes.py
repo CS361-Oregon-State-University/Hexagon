@@ -36,8 +36,29 @@ class workoutPlan:
         return self.planGoal
 
 
-
 workoutAppInstance = workoutApp()
+
+
+class library:
+    def __init__(self, courses):
+        self.courses = courses  # an array of courses
+
+    def setCourses(self, course):
+        self.courses.append(course)
+
+    def getCourses(self):
+        return self.courses
+
+    def removeCourse(self, removeIndex):
+        if removeIndex >= 0 and len(self.courses)-1 <= removeIndex:
+            self.courses.pop(removeIndex)
+            return self.courses
+        return -1
+
+    def sortLibrary(self, sortValue):
+        # sort value will be an int -> each will be one of the options such as popular, recent,
+        # or by name based on how they appear in the object
+        return sorted(self.courses, key=lambda x: x[sortValue])
 
 
 @app.get("/test")
@@ -63,4 +84,3 @@ async def updateUsername(username: Username):
 async def checkLogin():
     return {"username": workoutAppInstance.username,
             "password": workoutAppInstance.password}
-
