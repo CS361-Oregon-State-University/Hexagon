@@ -64,6 +64,25 @@ class lesson:
         return self.videoURL
 
 
+class course:
+    def __init__(self, lessons):
+        self.lessons = lessons  # array of lessons
+
+    def addLesson(self, lesson):
+        self.lessons.append(lesson)
+        return self.lessons
+
+    def removeLesson(self, removeIndex):
+        self.lessons.pop(removeIndex)
+        return self.lessons
+
+    def getLesson(self, findIndex):
+        if findIndex >= 0 and len(self.lessons)-1 <= findIndex:
+            return self.lessons[findIndex]
+        else:
+            return -1
+
+
 @app.get("/test")
 async def test():
     return {"message": "test worked"}
