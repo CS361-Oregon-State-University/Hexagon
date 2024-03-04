@@ -265,6 +265,40 @@ class Calisthenics(workoutType):
             raise Exception("The name of the Calisthenics workout is too long")
 
 
+class Calendar:
+    def __init__(self, hasSchedule, currentDay, schedule):
+        self.hasSchedule = hasSchedule
+        self.currentDay = currentDay
+        self.schedule = schedule
+
+    def getSchedule(self):
+        if (self.hasSchedule):
+            return self.schedule
+        else:
+            return "You don't have a schedule right now."
+    
+    def setSchedule(self, schedule):
+        self.schedule = schedule
+        return
+    
+class Week:
+    def __init__(self, number, weeksTillCompletion, schedule):
+        self.hasSchedule = hasSchedule
+        self.currentDay = currentDay
+        self.schedule = schedule
+
+    def getSchedule(self):
+        if (self.hasSchedule):
+            return self.schedule
+        else:
+            return "You don't have a schedule right now."
+    
+    def setSchedule(self, schedule):
+        self.schedule = schedule
+        return
+
+
+
 @app.get("/test")
 async def test():
     return {"message": "test worked"}
