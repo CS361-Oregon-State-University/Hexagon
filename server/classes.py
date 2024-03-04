@@ -33,12 +33,8 @@ class workoutPlan:
         self.planGoal = newGoal
 
     def getGoal(self):
-<<<<<<< HEAD
         return self.planGoal        
-=======
-        return self.planGoal
 
->>>>>>> parent of 27f2d53 (Created getters and setters for User class, set member variables)
 
 
 workoutAppInstance = workoutApp()
