@@ -36,6 +36,7 @@ class workoutPlan:
         return self.planGoal        
 
 
+
 workoutAppInstance = workoutApp()
 
 
