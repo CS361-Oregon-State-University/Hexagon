@@ -38,7 +38,6 @@ class workoutPlan:
 
 workoutAppInstance = workoutApp()
 
-
 class library:
     def __init__(self, courses):
         self.courses = courses  # an array of courses
@@ -59,6 +58,50 @@ class library:
         # sort value will be an int -> each will be one of the options such as popular, recent,
         # or by name based on how they appear in the object
         return sorted(self.courses, key=lambda x: x[sortValue])
+      
+class lesson:
+    def __init__(self, topic, article, videoURL):
+        self.topic = topic
+        self.article = article
+        self.videoURL = videoURL
+
+    def setTopic(self, topic):
+        self.topic = topic
+
+    def setArticle(self, article):
+        self.article = article
+
+    def setVideo(self, videoURL):
+        self.videoURL = videoURL
+
+    def getTopic(self):
+        return self.topic
+
+    def getArticle(self):
+        return self.article
+
+    def getVideo(self):
+        return self.videoURL
+
+
+class course:
+    def __init__(self, lessons):
+        self.lessons = lessons  # array of lessons
+
+    def addLesson(self, lesson):
+        self.lessons.append(lesson)
+        return self.lessons
+
+    def removeLesson(self, removeIndex):
+        self.lessons.pop(removeIndex)
+        return self.lessons
+
+    def getLesson(self, findIndex):
+        if findIndex >= 0 and len(self.lessons)-1 <= findIndex:
+            return self.lessons[findIndex]
+        else:
+            return -1
+
 
 
 @app.get("/test")
