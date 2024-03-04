@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import datetime
+
 app = FastAPI()
 
 
@@ -33,8 +33,8 @@ class workoutPlan:
         self.planGoal = newGoal
 
     def getGoal(self):
-        return self.planGoal
-    
+        return self.planGoal        
+
 
 workoutAppInstance = workoutApp()
 
