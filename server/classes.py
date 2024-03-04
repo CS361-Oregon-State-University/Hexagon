@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import datetime
-from server.userClasses.notification import Notification
+from userClasses.notification import Notification
 app = FastAPI()
 
 
