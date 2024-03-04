@@ -102,7 +102,33 @@ class course:
         else:
             return -1
 
-
+class goal:
+    def __init__(self, reason, stats, startDate):
+        self.reason = reason
+        self.stats = stats
+        self.startDate = startDate
+        
+    def setReason(self, reason):
+        self.reason = reason
+        
+    def setStats(self, stats):
+        self.stats = stats
+        
+    def getReason(self):
+        return self.reason
+    
+    def getStats(self):
+        return self.stats
+    
+    def getDayType(self, day):
+        # returns if the day is rest or workout value
+        return day.dayType
+    
+    def setDayType(self, day, dayType):
+        day.dayType = dayType
+        
+    def getDayNumber(self):
+        return 
 
 @app.get("/test")
 async def test():
