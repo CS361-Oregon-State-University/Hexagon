@@ -36,8 +36,32 @@ class workoutPlan:
         return self.planGoal
 
 
-
 workoutAppInstance = workoutApp()
+
+
+class lesson:
+    def __init__(self, topic, article, videoURL):
+        self.topic = topic
+        self.article = article
+        self.videoURL = videoURL
+
+    def setTopic(self, topic):
+        self.topic = topic
+
+    def setArticle(self, article):
+        self.article = article
+
+    def setVideo(self, videoURL):
+        self.videoURL = videoURL
+
+    def getTopic(self):
+        return self.topic
+
+    def getArticle(self):
+        return self.article
+
+    def getVideo(self):
+        return self.videoURL
 
 
 @app.get("/test")
@@ -63,4 +87,3 @@ async def updateUsername(username: Username):
 async def checkLogin():
     return {"username": workoutAppInstance.username,
             "password": workoutAppInstance.password}
-
