@@ -36,6 +36,7 @@ class workoutPlan:
         return self.planGoal
 
 
+
 workoutAppInstance = workoutApp()
 
 
@@ -62,3 +63,4 @@ async def updateUsername(username: Username):
 async def checkLogin():
     return {"username": workoutAppInstance.username,
             "password": workoutAppInstance.password}
+
