@@ -131,7 +131,28 @@ class User:
     def setDeviceList(self, deviceList: list[Device]) -> None:
         self.__deviceList = deviceList
 
+    def calculateAge(self) -> int:
+        today = datetime.datetime.today().date() #returns today's date in yyyy-mm-dd
+        birthday = self.getBirthday()
+        years = today.year - birthday.year
+        if today.month < birthday.month or (today.month == birthday.month and today.day < birthday.day):
+            years -= 1
+        
+        return years
     
+    def addInjury(self, injury: Injury) -> None:
+        self.__injuryList.append(injury)
+    
+    def addDevices(self,device: Device) -> None:
+        self.__deviceList.append(device)
+    
+    def shareUserStats(self) -> tuple: #share user stats
+        age = self.calculateAge()
+        weight = self.getWeight()
+        height = self.getHeight()
+        sex = self.getSex()
+        gender = self.getGender()
+        return (age, weight, height, sex, gender)
 
         
 
