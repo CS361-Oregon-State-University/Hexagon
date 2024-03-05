@@ -177,6 +177,37 @@ class Cardio(workoutType):
         else:
             raise Exception(
                 "Sorry, but the name of the cardio workout is too long")
+            
+class Milestone(ABC):
+    def __init__(self, user_stats):
+        self.user_stats = user_stats
+
+    @abstractmethod
+    def define_tasks(self):
+        pass
+
+class WeightLossMilestone(Milestone):
+    def define_tasks(self):
+        # Assuming user_stats is a dictionary with relevant stats
+        weight_loss_goal = self.user_stats['weight_loss_goal']
+        return [f"Lose {weight_loss_goal} pounds", "Exercise 30 minutes a day", "Drink 2 liters of water daily"]
+
+class StrengthTrainingMilestone(Milestone):
+    def define_tasks(self):
+        strength_goal = self.user_stats['strength_goal']
+        return [f"Increase bench press to {strength_goal} pounds", "Perform 50 push-ups daily", "Increase protein intake"]
+
+class FlexibilityMilestone(Milestone):
+    def define_tasks(self):
+        flexibility_goal = self.user_stats['flexibility_goal']
+        return [f"Achieve a {flexibility_goal} inch sit-and-reach", "Stretch for 20 minutes daily", "Attend yoga twice a week"]
+
+# Example usage:
+user_stats = {
+    'weight_loss_goal': 10, # User wants to lose 10 pounds
+    'strength_goal': 200, # User wants to bench press 200 pounds
+    'flexibility_goal': 15 # User wants to achieve a 15 inch sit-and-reach
+}
 
 
 class Weightlifting(workoutType):
