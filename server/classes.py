@@ -292,6 +292,30 @@ class workoutPlan(ABC):
             weeks[week] = plan
 
 
+@app.get("/test")
+async def test():
+    return {"message": "test worked"}
+
+
+@app.get("/username")
+async def getUsername():
+    return {"username": {workoutAppInstance.whatIsMyName()}}
+
+
+class Username(BaseModel):
+    username: str
+
+
+@app.post("/updateUsername")
+async def updateUsername(username: Username):
+    workoutAppInstance.updateUsername(username.username)
+
+
+@app.get("/loginInfo")
+async def checkLogin():
+    return {"username": workoutAppInstance.username,
+            "password": workoutAppInstance.password}
+
 class Calendar:
     def __init__(self, hasSchedule, currentDay, schedule):
         self.hasSchedule = hasSchedule
@@ -396,27 +420,3 @@ class Day:
             return "No workout at this index"
     
     #added pushWorkout to workoutPlan class
-
-@app.get("/test")
-async def test():
-    return {"message": "test worked"}
-
-
-@app.get("/username")
-async def getUsername():
-    return {"username": {workoutAppInstance.whatIsMyName()}}
-
-
-class Username(BaseModel):
-    username: str
-
-
-@app.post("/updateUsername")
-async def updateUsername(username: Username):
-    workoutAppInstance.updateUsername(username.username)
-
-
-@app.get("/loginInfo")
-async def checkLogin():
-    return {"username": workoutAppInstance.username,
-            "password": workoutAppInstance.password}
