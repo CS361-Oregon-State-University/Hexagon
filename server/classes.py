@@ -45,7 +45,7 @@ class workoutPlan:
     
     def pushWorkout(self, index):
         for week in self.weeks:
-            for day in week.schedule:
+            for day in week.getSchedule(week):
                 if day.date == date.today():
                     thisWorkout = day.getWorkout(index)
                     day.removeWorkout(day, index)
