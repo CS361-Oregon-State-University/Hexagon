@@ -36,5 +36,5 @@ class Injury:
     
     def remindToUpdate(self) -> Notification:
         notification = Notification("Injury", self.NOTIFICATION_TEXT)
-        return
+        return notification
     
