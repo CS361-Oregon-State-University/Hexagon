@@ -3,12 +3,7 @@ import datetime
 
 class Injury:
     NOTIFICATION_TEXT = "This is a reminder to update your injur's pain index."
-    def __init__(self): 
-        self.__area = "" #area of the injury (i.e. shoulder, knee)
-        self.__pain = 0   #user's pain rating 1-10
-        self.__injuryDate = datetime.datetime(0, 0, 0) #the date the injury occured
-    
-    def __init__(self, area, pain, injuryDate):
+    def __init__(self, area: str, pain: int, injuryDate: datetime.datetime): #date should be yyyy-mm-dd format
         self.__area = area
         self.__pain = pain
         self.__injuryDate = injuryDate
