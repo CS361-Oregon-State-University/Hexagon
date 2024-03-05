@@ -10,10 +10,10 @@ class Notification:
         self.__notificationTitle = title
     
     def getNotificationText(self) -> str:
-        return self.__notificationTitle
+        return self.__notificationText
     
     def setNotificationText(self, text) -> None:
         self.__notificationText = text
     
-    def sendNotification(): #TODO: finish when push notification functionality is implemented
+    def sendNotification(): #TODO: finish when push notification functionality is implemented, part of business logic
         return
