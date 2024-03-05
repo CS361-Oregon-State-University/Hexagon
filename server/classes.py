@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from abc import ABC
 from abc import abstractmethod
+from datetime import date
 
 app = FastAPI()
 
@@ -282,10 +283,14 @@ class Calendar:
         return
     
 class Week:
-    def __init__(self, number, weeksTillCompletion, schedule):
-        self.hasSchedule = hasSchedule
-        self.currentDay = currentDay
-        self.schedule = schedule
+    def __init__(self, currentDay, weekNumber, schedule):
+        self.currentDay = currentDay # want to change later using today() and date class
+        self.weekNumber = weekNumber
+        self.schedule = schedule #added array of days
+        if(len(schedule) > 0):
+            self.hasSchedule = True
+        else:
+            self.hasSchedule = False
 
     def getSchedule(self):
         if (self.hasSchedule):
