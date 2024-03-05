@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from abc import ABC
 from abc import abstractmethod
-from datetime import date
 
 app = FastAPI()
 
@@ -18,42 +17,26 @@ class workoutApp:
 
     def updateUsername(self, username):
         self.username = username
- 
-class workoutPlan(ABC):
-    def __init__(self):
-        self.__planName = None
-        self.__completion = 0
-        self.__goal = None
-        self.__weekOneExercises = []
-        self.__weekTwoExercises = []
-        self.__weekThreeExercises = []
-        self.__weekFourExercises = []
 
-    def setCompletion(self, completion):
-        self.__completion = completion
+
+class workoutPlan:
+    def __init__(self, planName, completion, planGoal):
+        self.planName = planName
+        self.completion = completion
+        self.planGoal = planGoal
+
+    def setCompletion(self, newCompletion):
+        self.completion = newCompletion
 
     def getCompletion(self):
-        return self.__completion
+        return self.completion
 
-    def setGoal(self, reason, stats, startDate):
-        self.__goal = goal(reason, stats, startDate)
+    def setGoal(self, newGoal):
+        self.planGoal = newGoal
 
     def getGoal(self):
-        return self.__goal
+        return self.planGoal
 
-    def displayCurrentWorkoutPlan(self):
-        return {"week one": self.__weekOneExercises,
-                "week two": self.__weekTwoExercises,
-                "week three": self.__weekThreeExercises,
-                "week four": self.__weekFourExercises}  # should update UI elements
-
-    # given the week (1-4) and plan, sets weeks workouts
-    def setWorkoutPlan(self, week, plan):
-        weeks = {1: self.__weekOneExercises, 2: self.__weekTwoExercises,
-                 3: self.__weekTwoExercises, 4: self.__weekFourExercises}
-
-        if week >= 1 and week <= 4:
-            weeks[week] = plan
 
 workoutAppInstance = workoutApp()
 
@@ -141,16 +124,6 @@ class goal:
 
     def getStats(self):
         return self.stats
-
-    def getDayType(self, day):
-        # returns if the day is rest or workout value
-        return day.dayType
-
-    def setDayType(self, day, dayType):
-        day.dayType = dayType
-
-    def getDayNumber(self):
-        return
 
 
 class workoutType(ABC):
@@ -282,112 +255,41 @@ class Calisthenics(workoutType):
             raise Exception("The name of the Calisthenics workout is too long")
 
 
-class Calendar:
-    def __init__(self, hasSchedule, currentDay, schedule):
-        self.hasSchedule = hasSchedule
-        self.currentDay = currentDay
-        self.schedule = schedule
+class workoutPlan(ABC):
+    def __init__(self):
+        self.__planName = None
+        self.__completion = 0
+        self.__goal = None
+        self.__weekOneExercises = []
+        self.__weekTwoExercises = []
+        self.__weekThreeExercises = []
+        self.__weekFourExercises = []
 
-    def getSchedule(self):
-        if (self.hasSchedule):
-            return self.schedule
-        else:
-            return "You don't have a schedule right now."
-    
-    def setSchedule(self, schedule):
-        self.schedule = schedule
-        return
-    
-class Week:
-    def __init__(self, weekNumber, schedule):
-        self.weekNumber = weekNumber
-        self.schedule = schedule #added array of days
-        if(len(schedule) > 0):
-            self.hasSchedule = True
-        else:
-            self.hasSchedule = False
+    def setCompletion(self, completion):
+        self.__completion = completion
 
-    def getSchedule(self):
-        if (self.hasSchedule):
-            return self.schedule
-        else:
-            return "You don't have a schedule right now."
-    
-    def setSchedule(self, schedule):
-        self.schedule = schedule
-        return
-    
-    def getWeekNumber(self):
-        return self.weekNumber
-    
-    #took out weekSummary
-    
-    #took out currentDay, using dayNumber in Day class instead
-    
+    def getCompletion(self):
+        return self.__completion
 
+    def setGoal(self, reason, stats, startDate):
+        self.__goal = goal(reason, stats, startDate)
 
-class Day:
-    def __init__(self, dayType, dayNumber, workouts, date):
-        self.dayType = dayType
-        self.dayNumber = dayNumber
-        self.dayStatus = "Incomplete"
-        self.workouts= workouts # WorkoutType object(s)
-        self.date = date
-    
-    def getdayType(self):
-        return self.dayType
-    
-    def setDayType(self, dayType):
-        self.dayType = dayType
-        return
-    
-    def getDayNumber(self):
-        return self.dayNumber
-    
-    def setDayNumber(self, dayNumber):
-        self.dayNumber = dayNumber
-        return
-    
-    def getDayStatus(self):
-        return self.dayStatus
-    
-    def setDayStatus(self, dayStatus):
-        self.dayStatus = dayStatus
-        return
-    
-    def getWorkouts(self):
-        return self.workouts
-    
-    def setWorkouts(self, workouts):
-        self.workouts = workouts
-        return
-    
-    def getDate(self):
-        return self.date
-    
-    def setDate(self, date):
-        self.date = date
-        return
-    
-    def addWorkout(self, workout):      #adds a workout to the list for today, caps at 3
-        if(len(self.workouts) >= 3):
-            return "You have reached the maximum amount of workouts for today"
-        self.workouts.append(workout)
-        return
-    
-    def removeWorkout(self, index):
-        self.workouts.pop(index)
-        return
-    
-    def getWorkout(self, index):
-        if index >= 0 and index <= 2:
-            return self.workouts[findIndex]
-        else:
-            return "No workout at this index"
-    
-    #added pushWorkout to workoutPlan class
+    def getGoal(self):
+        return self.__goal
 
+    def displayCurrentWorkoutPlan(self):
+        return {"week one": self.__weekOneExercises,
+                "week two": self.__weekTwoExercises,
+                "week three": self.__weekThreeExercises,
+                "week four": self.__weekFourExercises}  # should update UI elements
 
+    # given the week (1-4) and plan, sets weeks workouts
+    def setWorkoutPlan(self, week, plan):
+        weeks = {1: self.__weekOneExercises, 2: self.__weekTwoExercises,
+                 3: self.__weekTwoExercises, 4: self.__weekFourExercises}
+
+        if week >= 1 and week <= 4:
+            weeks[week] = plan
 
 
 @app.get("/test")
