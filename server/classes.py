@@ -19,25 +19,6 @@ class workoutApp:
         self.username = username
 
 
-class workoutPlan:
-    def __init__(self, planName, completion, planGoal):
-        self.planName = planName
-        self.completion = completion
-        self.planGoal = planGoal
-
-    def setCompletion(self, newCompletion):
-        self.completion = newCompletion
-
-    def getCompletion(self):
-        return self.completion
-
-    def setGoal(self, newGoal):
-        self.planGoal = newGoal
-
-    def getGoal(self):
-        return self.planGoal
-
-
 workoutAppInstance = workoutApp()
 
 
