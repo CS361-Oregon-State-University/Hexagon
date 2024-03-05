@@ -125,16 +125,6 @@ class goal:
     def getStats(self):
         return self.stats
 
-    def getDayType(self, day):
-        # returns if the day is rest or workout value
-        return day.dayType
-
-    def setDayType(self, day, dayType):
-        day.dayType = dayType
-
-    def getDayNumber(self):
-        return
-
 
 class workoutType(ABC):
 
@@ -263,6 +253,43 @@ class Calisthenics(workoutType):
             self.name = name
         else:
             raise Exception("The name of the Calisthenics workout is too long")
+
+
+class workoutPlan(ABC):
+    def __init__(self):
+        self.__planName = None
+        self.__completion = 0
+        self.__goal = None
+        self.__weekOneExercises = []
+        self.__weekTwoExercises = []
+        self.__weekThreeExercises = []
+        self.__weekFourExercises = []
+
+    def setCompletion(self, completion):
+        self.__completion = completion
+
+    def getCompletion(self):
+        return self.__completion
+
+    def setGoal(self, reason, stats, startDate):
+        self.__goal = goal(reason, stats, startDate)
+
+    def getGoal(self):
+        return self.__goal
+
+    def displayCurrentWorkoutPlan(self):
+        return {"week one": self.__weekOneExercises,
+                "week two": self.__weekTwoExercises,
+                "week three": self.__weekThreeExercises,
+                "week four": self.__weekFourExercises}  # should update UI elements
+
+    # given the week (1-4) and plan, sets weeks workouts
+    def setWorkoutPlan(self, week, plan):
+        weeks = {1: self.__weekOneExercises, 2: self.__weekTwoExercises,
+                 3: self.__weekTwoExercises, 4: self.__weekFourExercises}
+
+        if week >= 1 and week <= 4:
+            weeks[week] = plan
 
 
 @app.get("/test")
