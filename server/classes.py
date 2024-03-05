@@ -21,10 +21,11 @@ class workoutApp:
 
 
 class workoutPlan:
-    def __init__(self, planName, completion, planGoal):
+    def __init__(self, planName, completion, planGoal, weeks):
         self.planName = planName
         self.completion = completion
         self.planGoal = planGoal
+        self.weeks = weeks
 
     def setCompletion(self, newCompletion):
         self.completion = newCompletion
@@ -37,6 +38,24 @@ class workoutPlan:
 
     def getGoal(self):
         return self.planGoal
+
+    #added weeks
+    def getWeeks(self): #4 Weeks in a plan
+        return self.weeks
+    
+    def pushWorkout(self, index):
+        for week in self.weeks:
+            for day in week.schedule:
+                if day.date == date.today():
+                    thisWorkout = day.getWorkout(index)
+                    day.removeWorkout(day, index)
+                    tomorrow = date.today() + timedelta(days=1)
+                    tomorrow.addWorkout(tomorrow, thisWorkout)
+                    return
+        return "No workout to push!"
+
+
+    
 
 
 workoutAppInstance = workoutApp()
@@ -283,8 +302,7 @@ class Calendar:
         return
     
 class Week:
-    def __init__(self, currentDay, weekNumber, schedule):
-        self.currentDay = currentDay # want to change later using today() and date class
+    def __init__(self, weekNumber, schedule):
         self.weekNumber = weekNumber
         self.schedule = schedule #added array of days
         if(len(schedule) > 0):
@@ -301,6 +319,77 @@ class Week:
     def setSchedule(self, schedule):
         self.schedule = schedule
         return
+    
+    def getWeekNumber(self):
+        return self.weekNumber
+    
+    
+    
+    #took out currentDay, using dayNumber in Day class instead
+    
+
+
+class Day:
+    def __init__(self, dayType, dayNumber, workouts, date):
+        self.dayType = dayType
+        self.dayNumber = dayNumber
+        self.dayStatus = "Incomplete"
+        self.workouts= workouts # WorkoutType object(s)
+        self.date = date
+    
+    def getdayType(self):
+        return self.dayType
+    
+    def setDayType(self, dayType):
+        self.dayType = dayType
+        return
+    
+    def getDayNumber(self):
+        return self.dayNumber
+    
+    def setDayNumber(self, dayNumber):
+        self.dayNumber = dayNumber
+        return
+    
+    def getDayStatus(self):
+        return self.dayStatus
+    
+    def setDayStatus(self, dayStatus):
+        self.dayStatus = dayStatus
+        return
+    
+    def getWorkouts(self):
+        return self.workouts
+    
+    def setWorkouts(self, workouts):
+        self.workouts = workouts
+        return
+    
+    def getDate(self):
+        return self.date
+    
+    def setDate(self, date):
+        self.date = date
+        return
+    
+    def addWorkout(self, workout):      #adds a workout to the list for today, caps at 3
+        if(len(self.workouts) >= 3):
+            return "You have reached the maximum amount of workouts for today"
+        self.workouts.append(workout)
+        return
+    
+    def removeWorkout(self, index):
+        self.workouts.pop(index)
+        return
+    
+    def getWorkout(self, index):
+        if index >= 0 and index <= 2:
+            return self.workouts[findIndex]
+        else:
+            return "No workout at this index"
+    
+    #added pushWorkout to workoutPlan class
+
 
 
 
