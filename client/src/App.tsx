@@ -1,6 +1,6 @@
 import { useState, createContext } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import { SignedIn, SignedOut } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 import Landing from "./routes/landing";
 import Library from "./routes/library";
 import ScrollTop from "./components/scrolltop";
@@ -130,7 +130,20 @@ function App() {
       <userContext.Provider value={{}}>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/library" element={<Library />} />
+
+          <Route
+            path="/library"
+            element={
+              <>
+                <SignedIn>
+                  <Library />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            }
+          />
         </Routes>
       </userContext.Provider>
     </BrowserRouter>
