@@ -1,9 +1,10 @@
 import Navbar from "../components/navbar";
 import { Link } from "react-router-dom";
 
+
 const landing = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col items-center">
       <Navbar />
       <div className="flex flex-col min-h-[100dvh]">
         <main className="flex-1">
