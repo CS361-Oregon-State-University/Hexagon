@@ -38,7 +38,7 @@ const navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/" className="btn btn-ghost mx-1">
+                <Link to="/library" className="btn btn-ghost mx-1">
                   Workouts
                 </Link>
               </li>

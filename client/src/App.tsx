@@ -1,7 +1,8 @@
 import { useState, createContext } from "react";
-import { Route, Routes, BrowserRouter, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import Landing from "./routes/landing";
+import Library from "./routes/library";
 import ScrollTop from "./components/scrolltop";
 
 import "./App.css";
@@ -129,6 +130,7 @@ function App() {
       <userContext.Provider value={{}}>
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/library" element={<Library />} />
         </Routes>
       </userContext.Provider>
     </BrowserRouter>
