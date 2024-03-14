@@ -43,7 +43,7 @@ const navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/" className="btn btn-ghost mx-1">
+                <Link to="/profile" className="btn btn-ghost mx-1">
                   Profile
                 </Link>
               </li>

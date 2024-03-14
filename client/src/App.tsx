@@ -3,6 +3,7 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 import Landing from "./routes/landing";
 import Library from "./routes/library";
+import Profile from "./routes/profile";
 import ScrollTop from "./components/scrolltop";
 
 import "./App.css";
@@ -137,6 +138,19 @@ function App() {
               <>
                 <SignedIn>
                   <Library />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <>
+                <SignedIn>
+                  <Profile />
                 </SignedIn>
                 <SignedOut>
                   <RedirectToSignIn />
