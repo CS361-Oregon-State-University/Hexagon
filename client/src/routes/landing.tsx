@@ -1,7 +1,6 @@
 import Navbar from "../components/navbar";
 import { Link } from "react-router-dom";
 
-
 const landing = () => {
   return (
     <div className="flex flex-col items-center">
@@ -128,12 +127,12 @@ const landing = () => {
                       width="140"
                     />
                   </div>
-                  <div className="mx-auto flex w-full items-center justify-center p-8">
+                  <div className="mx-auto flex w-full items-center justify-center p-4 sm:p-8">
                     <img
                       alt="Logo"
-                      className="aspect-[2/1] overflow-hidden rounded-lg object-contain object-center"
+                      className="overflow-hidden rounded-lg object-contain object-center"
                       height="70"
-                      src="/placeholder.svg"
+                      src="/peter.jpg"
                       width="140"
                     />
                   </div>

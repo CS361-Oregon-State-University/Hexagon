@@ -1,6 +1,7 @@
 import { useState, createContext } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
+import Signin from "./routes/signin";
 import Landing from "./routes/landing";
 import Library from "./routes/library";
 import Profile from "./routes/profile";
@@ -131,7 +132,7 @@ function App() {
       <userContext.Provider value={{}}>
         <Routes>
           <Route path="/" element={<Landing />} />
-
+          <Route path="/sign-in/*" element={<Signin />} />
           <Route
             path="/library"
             element={
