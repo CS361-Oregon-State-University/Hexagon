@@ -4,6 +4,7 @@ import { useUser } from "@clerk/clerk-react";
 const profile = () => {
   const username = useUser().user?.username;
   const userImg = useUser().user?.imageUrl;
+  const userId = useUser().user?.id;
 
   return (
     <>
