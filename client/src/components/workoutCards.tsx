@@ -26,7 +26,7 @@ const workoutCards = ({
       to="/"
       className="transform transition-transform hover:translate-y-[-15px] hover:duration-500 hover:ease-in-out"
     >
-      <div className="card w-80 bg-base-100 shadow-xl hover:shadow-2xl transform transition-shadow">
+      <div className="card w-80 bg-base-100 shadow-xl hover:shadow-2xl transform transition-shadow mb-2">
         <figure>
           <img
             src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
@@ -64,6 +64,14 @@ const workoutCards = ({
               </div>
             )}
           </div>
+        </div>
+        <div className="join flex ">
+          <button className="btn btn-success w-36 ml-2 mr-4">
+            <Link to="/start-workout" className="btn btn-ghost mx-1">
+              Start this exercise
+            </Link>
+          </button>
+          <button className="btn btn-info w-36 ">Add to today's workout</button>
         </div>
       </div>
     </Link>
