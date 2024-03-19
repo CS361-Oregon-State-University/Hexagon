@@ -7,6 +7,7 @@ import Library from "./routes/library";
 import Profile from "./routes/profile";
 import Faq from "./routes/faq";
 import ScrollTop from "./components/scrolltop";
+import StartWorkout from "./routes/startWorkout";
 
 import "./App.css";
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/sign-in/*" element={<Signin />} />
           <Route path="/faq" element={<Faq />} />
+          <Route path="/start-workout" element={<StartWorkout />} />
           <Route
             path="/library"
             element={

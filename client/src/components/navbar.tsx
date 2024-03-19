@@ -53,6 +53,11 @@ const navbar = () => {
                   <li>
                     <UserButton />
                   </li>
+                  <li>
+                    <Link to="/start-workout" className="btn btn-ghost mx-1">
+                      Start Workout
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>
