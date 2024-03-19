@@ -6,22 +6,6 @@ from abc import abstractmethod
 app = FastAPI()
 
 
-class workoutApp:
-    def __init__(self):
-        self.username = "admin"
-        self.password = "admin"
-        self.hasworkedout = False
-
-    def whatIsMyName(self):
-        return self.username
-
-    def updateUsername(self, username):
-        self.username = username
-
-
-workoutAppInstance = workoutApp()
-
-
 class library:
     def __init__(self, courses):
         self.courses = courses  # an array of courses
@@ -158,7 +142,8 @@ class Cardio(workoutType):
         else:
             raise Exception(
                 "Sorry, but the name of the cardio workout is too long")
-            
+
+
 class Milestone(ABC):
     def __init__(self, user_stats):
         self.user_stats = user_stats
@@ -167,27 +152,31 @@ class Milestone(ABC):
     def define_tasks(self):
         pass
 
+
 class WeightLossMilestone(Milestone):
     def define_tasks(self):
         # Assuming user_stats is a dictionary with relevant stats
         weight_loss_goal = self.user_stats['weight_loss_goal']
         return [f"Lose {weight_loss_goal} pounds", "Exercise 30 minutes a day", "Drink 2 liters of water daily"]
 
+
 class StrengthTrainingMilestone(Milestone):
     def define_tasks(self):
         strength_goal = self.user_stats['strength_goal']
         return [f"Increase bench press to {strength_goal} pounds", "Perform 50 push-ups daily", "Increase protein intake"]
+
 
 class FlexibilityMilestone(Milestone):
     def define_tasks(self):
         flexibility_goal = self.user_stats['flexibility_goal']
         return [f"Achieve a {flexibility_goal} inch sit-and-reach", "Stretch for 20 minutes daily", "Attend yoga twice a week"]
 
+
 # Example usage:
 user_stats = {
-    'weight_loss_goal': 10, # User wants to lose 10 pounds
-    'strength_goal': 200, # User wants to bench press 200 pounds
-    'flexibility_goal': 15 # User wants to achieve a 15 inch sit-and-reach
+    'weight_loss_goal': 10,  # User wants to lose 10 pounds
+    'strength_goal': 200,  # User wants to bench press 200 pounds
+    'flexibility_goal': 15  # User wants to achieve a 15 inch sit-and-reach
 }
 
 
@@ -269,7 +258,7 @@ class Calisthenics(workoutType):
 
 class workoutPlan(ABC):
     def __init__(self):
-        self.__planName = None
+        self.__planName = "default"
         self.__completion = 0
         self.__goal = None
         self.__weekOneExercises = []
@@ -304,29 +293,9 @@ class workoutPlan(ABC):
             weeks[week] = plan
 
 
-@app.get("/test")
-async def test():
-    return {"message": "test worked"}
-
-
-@app.get("/username")
-async def getUsername():
-    return {"username": {workoutAppInstance.whatIsMyName()}}
-
-
 class Username(BaseModel):
     username: str
 
-
-@app.post("/updateUsername")
-async def updateUsername(username: Username):
-    workoutAppInstance.updateUsername(username.username)
-
-
-@app.get("/loginInfo")
-async def checkLogin():
-    return {"username": workoutAppInstance.username,
-            "password": workoutAppInstance.password}
 
 class Calendar:
     def __init__(self, hasSchedule, currentDay, schedule):
@@ -339,16 +308,17 @@ class Calendar:
             return self.schedule
         else:
             return "You don't have a schedule right now."
-    
+
     def setSchedule(self, schedule):
         self.schedule = schedule
         return
-    
+
+
 class Week:
     def __init__(self, weekNumber, schedule):
         self.weekNumber = weekNumber
-        self.schedule = schedule #added array of days
-        if(len(schedule) > 0):
+        self.schedule = schedule  # added array of days
+        if (len(schedule) > 0):
             self.hasSchedule = True
         else:
             self.hasSchedule = False
@@ -358,18 +328,17 @@ class Week:
             return self.schedule
         else:
             return "You don't have a schedule right now."
-    
+
     def setSchedule(self, schedule):
         self.schedule = schedule
         return
-    
+
     def getWeekNumber(self):
         return self.weekNumber
-    
-    #took out weekSummary
-    
-    #took out currentDay, using dayNumber in Day class instead
-    
+
+    # took out weekSummary
+
+    # took out currentDay, using dayNumber in Day class instead
 
 
 class Day:
@@ -377,58 +346,79 @@ class Day:
         self.dayType = dayType
         self.dayNumber = dayNumber
         self.dayStatus = "Incomplete"
-        self.workouts= workouts # WorkoutType object(s)
+        self.workouts = workouts  # WorkoutType object(s)
         self.date = date
-    
+
     def getdayType(self):
         return self.dayType
-    
+
     def setDayType(self, dayType):
         self.dayType = dayType
         return
-    
+
     def getDayNumber(self):
         return self.dayNumber
-    
+
     def setDayNumber(self, dayNumber):
         self.dayNumber = dayNumber
         return
-    
+
     def getDayStatus(self):
         return self.dayStatus
-    
+
     def setDayStatus(self, dayStatus):
         self.dayStatus = dayStatus
         return
-    
+
     def getWorkouts(self):
         return self.workouts
-    
+
     def setWorkouts(self, workouts):
         self.workouts = workouts
         return
-    
+
     def getDate(self):
         return self.date
-    
+
     def setDate(self, date):
         self.date = date
         return
-    
-    def addWorkout(self, workout):      #adds a workout to the list for today, caps at 3
-        if(len(self.workouts) >= 3):
+
+    def addWorkout(self, workout):  # adds a workout to the list for today, caps at 3
+        if (len(self.workouts) >= 3):
             return "You have reached the maximum amount of workouts for today"
         self.workouts.append(workout)
         return
-    
+
     def removeWorkout(self, index):
         self.workouts.pop(index)
         return
-    
+
     def getWorkout(self, index):
         if index >= 0 and index <= 2:
             return self.workouts[findIndex]
         else:
             return "No workout at this index"
-    
-    #added pushWorkout to workoutPlan class
+
+    # added pushWorkout to workoutPlan class
+
+
+class workoutApp:
+    def __init__(self):
+        self.isWorkingOut = False
+        self.timeLeft = 0
+        self.workoutPlan = workoutPlan()
+        self.workouts = [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+            "High", 4 * 60, "Mountain Climbers"), Cardio("High", 2 * 60, "High Knee"), Cardio("High", 3 * 60, "Squat")]
+
+
+workoutAppInstance = workoutApp()
+
+
+@app.get("/getWorkouts")
+def getWorkouts():
+    workouts = []
+    for workout in workoutAppInstance.workouts:
+        workouts.append({"Name": workout.getName(), "Intensity": workout.getIntensity(
+        ), "Time": workout.getLength(), "Type": workout.getType()})
+    return workouts

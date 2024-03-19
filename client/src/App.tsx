@@ -29,7 +29,7 @@ function App() {
                   <Library />
                 </SignedIn>
                 <SignedOut>
-                  <RedirectToSignIn />
+                  <RedirectToSignIn redirectUrl="/"/>
                 </SignedOut>
               </>
             }
