@@ -14,10 +14,13 @@ import "./App.css";
 export const userContext = createContext({});
 
 function App() {
+  const [isUserWorkingOut, setIsUserWorkingOut] = useState(false);
+  const [timeLeftInWorkout, setTimeLeftInWorkout] = useState(0);
+
   return (
     <BrowserRouter>
       <ScrollTop />
-      <userContext.Provider value={{}}>
+      <userContext.Provider value={{ isUserWorkingOut, setIsUserWorkingOut, timeLeftInWorkout, setTimeLeftInWorkout }}>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/sign-in/*" element={<Signin />} />
@@ -31,7 +34,7 @@ function App() {
                   <Library />
                 </SignedIn>
                 <SignedOut>
-                  <RedirectToSignIn redirectUrl="/"/>
+                  <RedirectToSignIn redirectUrl="/" />
                 </SignedOut>
               </>
             }

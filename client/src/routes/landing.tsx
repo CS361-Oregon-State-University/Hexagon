@@ -1,8 +1,37 @@
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { Link, useNavigate } from "react-router-dom";
+import { userContext } from "../App";
+import { useContext } from "react";
+import { SignedIn } from "@clerk/clerk-react";
+import axios from "axios";
 
 const landing = () => {
+  const navigate = useNavigate();
+
+  const {
+    isUserWorkingOut,
+    setIsUserWorkingOut,
+    timeLeftInWorkout,
+    setTimeLeftInWorkout,
+  } = useContext(userContext);
+
+  if ((<SignedIn />)) {
+    axios.get("/isUserWorkingOut").then((res) => {
+      if (res.data.isUserWorkingOut) {
+        setIsUserWorkingOut(res.data.isWorkingOut);
+        setTimeLeftInWorkout(res.data.timeLeft);
+      } else {
+        setIsUserWorkingOut(false);
+        setTimeLeftInWorkout(0);
+      }
+    });
+  }
+
+  if (isUserWorkingOut) {
+    navigate("/start-workout");
+  }
+
   return (
     <div className="flex flex-col items-center">
       <Navbar />

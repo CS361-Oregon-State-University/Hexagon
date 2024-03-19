@@ -5,10 +5,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 type workout = {
-  Name: string;
-  Time: number;
-  Intensity: string;
-  Type: string;
+  name: string;
+  time?: number;
+  intensity?: string;
+  type: string;
+  sets?: number;
+  reps?: number;
 };
 
 const library = () => {
@@ -36,10 +38,12 @@ const library = () => {
           {workouts?.map((workout: workout, i) => (
             <WorkoutCards
               key={i} // Remember to add a unique key prop when mapping over arrays in React
-              name={workout.Name}
-              length={workout.Time}
-              intensity={workout.Intensity}
-              type={workout.Type}
+              name={workout.name}
+              length={workout.time}
+              intensity={workout.intensity}
+              type={workout.type}
+              sets={workout.sets}
+              reps={workout.reps}
             />
           ))}
         </div>
