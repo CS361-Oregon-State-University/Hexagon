@@ -44,7 +44,7 @@ function App() {
                   <Profile />
                 </SignedIn>
                 <SignedOut>
-                  <RedirectToSignIn />
+                  <RedirectToSignIn redirectUrl="/"/>
                 </SignedOut>
               </>
             }
