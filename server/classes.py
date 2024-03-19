@@ -407,10 +407,29 @@ class workoutApp:
     def __init__(self):
         self.isWorkingOut = False
         self.timeLeft = 0
+        self.currentWorkout = None
         self.workoutPlan = workoutPlan([[Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
             "High", 4 * 60, "Mountain Climbers")], [Cardio("High", 2 * 60, "High Knee"), Cardio("High", 3 * 60, "Squat"), Weightlifting(5, 3, "Benchpress")]], [], [], [])
         self.workouts = [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
             "High", 4 * 60, "Mountain Climbers"), Cardio("High", 2 * 60, "High Knee"), Cardio("High", 3 * 60, "Squat"), Weightlifting(5, 3, "Benchpress")]
+
+    def setIsInWorkout(self, timeLeft):
+        self.isWorkingOut = True
+        self.timeLeft = timeLeft
+
+    def getCurrentExercise(self):
+        return self.currentWorkout
+
+    def setFinishedWorkout(self):
+        self.isWorkingOut = False
+        self.timeLeft = 0
+
+    def removeCompletedExercises(self, moreThanOne, i):
+        if moreThanOne:
+            for _ in range(i):
+                self.workoutPlan.pop(0)
+        else:
+            self.workoutPlan.pop(i)
 
 
 workoutAppInstance = workoutApp()
@@ -443,11 +462,14 @@ class workoutInfo(BaseModel):
 
 @app.post("/updateWorkoutProgress")
 def updateWorkoutProgress(timeLeft: workoutInfo):
-    workoutAppInstance.isWorkingOut = True
-    workoutAppInstance.timeLeft = timeLeft.timeLeft
+    workoutAppInstance.setIsInWorkout(timeLeft.timeLeft)
 
 
 @app.get("/finishedWorkout")
 def finishedWorkout():
-    workoutAppInstance.isWorkingOut = False
-    workoutAppInstance.timeLeft = 0
+    workoutAppInstance.setFinishedWorkout()
+
+
+@app.get("/getCurrentExercise")
+def getCurrentExercise():
+    return workoutAppInstance.getCurrentExercise()

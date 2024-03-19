@@ -16,6 +16,7 @@ export const userContext = createContext({});
 function App() {
   const [isUserWorkingOut, setIsUserWorkingOut] = useState(false);
   const [timeLeftInWorkout, setTimeLeftInWorkout] = useState(0);
+  const [currentWorkoutPlan, setCurrentWorkoutPlan] = useState([])
 
   return (
     <BrowserRouter>
