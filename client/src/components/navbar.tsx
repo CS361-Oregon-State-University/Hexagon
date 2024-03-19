@@ -118,11 +118,6 @@ const navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/library" className="btn btn-ghost mx-1">
-                      Workouts
-                    </Link>
-                  </li>
-                  <li>
                     <Link to="/sign-in" className="btn btn-ghost mx-1">
                       Sign In
                     </Link>

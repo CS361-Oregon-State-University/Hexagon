@@ -257,14 +257,14 @@ class Calisthenics(workoutType):
 
 
 class workoutPlan(ABC):
-    def __init__(self):
+    def __init__(self, weekOne, weekTwo, weekThree, weekFour):
         self.__planName = "default"
         self.__completion = 0
         self.__goal = None
-        self.__weekOneExercises = []
-        self.__weekTwoExercises = []
-        self.__weekThreeExercises = []
-        self.__weekFourExercises = []
+        self.__weekOneExercises = weekOne
+        self.__weekTwoExercises = weekTwo
+        self.__weekThreeExercises = weekThree
+        self.__weekFourExercises = weekFour
 
     def setCompletion(self, completion):
         self.__completion = completion
@@ -407,9 +407,10 @@ class workoutApp:
     def __init__(self):
         self.isWorkingOut = False
         self.timeLeft = 0
-        self.workoutPlan = workoutPlan()
+        self.workoutPlan = workoutPlan([[Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+            "High", 4 * 60, "Mountain Climbers")], [Cardio("High", 2 * 60, "High Knee"), Cardio("High", 3 * 60, "Squat"), Weightlifting(5, 3, "Benchpress")]], [], [], [])
         self.workouts = [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
-            "High", 4 * 60, "Mountain Climbers"), Cardio("High", 2 * 60, "High Knee"), Cardio("High", 3 * 60, "Squat")]
+            "High", 4 * 60, "Mountain Climbers"), Cardio("High", 2 * 60, "High Knee"), Cardio("High", 3 * 60, "Squat"), Weightlifting(5, 3, "Benchpress")]
 
 
 workoutAppInstance = workoutApp()
@@ -419,6 +420,34 @@ workoutAppInstance = workoutApp()
 def getWorkouts():
     workouts = []
     for workout in workoutAppInstance.workouts:
-        workouts.append({"Name": workout.getName(), "Intensity": workout.getIntensity(
-        ), "Time": workout.getLength(), "Type": workout.getType()})
+        if workout.getType() == "Cardio":
+            workouts.append({"name": workout.getName(), "intensity": workout.getIntensity(
+            ), "time": workout.getLength(), "type": workout.getType()})
+        else:
+            workouts.append({"name": workout.getName(), "reps": workout.getReps(
+            ), "sets": workout.getSets(), "type": workout.getType()})
     return workouts
+
+
+@app.get("/isUserWorkingOut")
+def getIsWorkingOut():
+    if (workoutAppInstance.isWorkingOut):
+        return {"isWorkingOut": True, "timeLeft": workoutAppInstance.timeLeft}
+    else:
+        return {"isWorkingOut": False}
+
+
+class workoutInfo(BaseModel):
+    timeLeft: int
+
+
+@app.post("/updateWorkoutProgress")
+def updateWorkoutProgress(timeLeft: workoutInfo):
+    workoutAppInstance.isWorkingOut = True
+    workoutAppInstance.timeLeft = timeLeft.timeLeft
+
+
+@app.get("/finishedWorkout")
+def finishedWorkout():
+    workoutAppInstance.isWorkingOut = False
+    workoutAppInstance.timeLeft = 0

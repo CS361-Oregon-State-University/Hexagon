@@ -2,13 +2,23 @@ import { Link } from "react-router-dom";
 
 type workoutCards = {
   name: string;
-  length: number;
-  intensity: string;
+  length?: number;
+  intensity?: string;
   type: string;
+  sets?: number;
+  reps?: number;
 };
 
-const workoutCards = ({ name, length, intensity, type }: workoutCards) => {
-  const time = length / 60;
+const workoutCards = ({
+  name,
+  length,
+  intensity,
+  type,
+  sets,
+  reps,
+}: workoutCards) => {
+  const time = length ? length / 60 : 0;
+
   console.log(time, length);
 
   return (
@@ -16,7 +26,7 @@ const workoutCards = ({ name, length, intensity, type }: workoutCards) => {
       to="/"
       className="transform transition-transform hover:translate-y-[-15px] hover:duration-500 hover:ease-in-out"
     >
-      <div className="card w-72 bg-base-100 shadow-xl hover:shadow-2xl transform transition-shadow">
+      <div className="card w-80 bg-base-100 shadow-xl hover:shadow-2xl transform transition-shadow">
         <figure>
           <img
             src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
@@ -29,14 +39,30 @@ const workoutCards = ({ name, length, intensity, type }: workoutCards) => {
             <div className="badge badge-secondary">{type}</div>
           </h2>
           <div className="card-actions flex flex-row items-center">
-            <div>
-              <p>Time: </p>
-              <div className="badge badge-accent">{time}mins</div>
-            </div>
-            <div>
-              <p>Intensity: </p>
-              <div className="badge badge-accent">{intensity}</div>
-            </div>
+            {length && (
+              <div>
+                <p>Time: </p>
+                <div className="badge badge-accent">{time}mins</div>
+              </div>
+            )}
+            {!length && (
+              <>
+                <div>
+                  <p>Sets: </p>
+                  <div className="badge badge-accent">{sets}</div>
+                </div>
+                <div>
+                  <p>Reps: </p>
+                  <div className="badge badge-accent">{reps}</div>
+                </div>
+              </>
+            )}
+            {intensity && (
+              <div>
+                <p>Intensity: </p>
+                <div className="badge badge-accent">{intensity}</div>
+              </div>
+            )}
           </div>
         </div>
       </div>
