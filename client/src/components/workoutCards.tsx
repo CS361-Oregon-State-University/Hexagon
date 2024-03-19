@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
 
-const workoutCards = () => {
+type workoutCards = {
+  name: string;
+  length: number;
+  intensity: string;
+  type: string;
+};
+
+const workoutCards = ({ name, length, intensity, type }: workoutCards) => {
+  const time = length / 60;
+  console.log(time, length);
+
   return (
     <Link
       to="/"
@@ -15,22 +25,17 @@ const workoutCards = () => {
         </figure>
         <div className="card-body">
           <h2 className="card-title">
-            Pushup
-            <div className="badge badge-secondary">Cardio</div>
+            {name}
+            <div className="badge badge-secondary">{type}</div>
           </h2>
-          <p>
-            an exercise in which a person lies facing the floor and, keeping
-            their back straight, raises their body by pressing down on their
-            hands
-          </p>
           <div className="card-actions flex flex-row items-center">
             <div>
               <p>Time: </p>
-              <div className="badge badge-accent">25 min</div>
+              <div className="badge badge-accent">{time}mins</div>
             </div>
             <div>
-              <p>Equipment: </p>
-              <div className="badge badge-accent">Yoga Mat</div>
+              <p>Intensity: </p>
+              <div className="badge badge-accent">{intensity}</div>
             </div>
           </div>
         </div>
