@@ -58,6 +58,11 @@ const navbar = () => {
                       Start Workout
                     </Link>
                   </li>
+                  <li>
+                    <Link to="/view-workout-plan" className="btn btn-ghost mx-1">
+                      View Workout Plan
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>
