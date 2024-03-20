@@ -18,19 +18,29 @@ export const userContext = createContext({});
 function App() {
   const [isUserWorkingOut, setIsUserWorkingOut] = useState(false);
   const [timeLeftInWorkout, setTimeLeftInWorkout] = useState(0);
-  const [currentWorkoutPlan, setCurrentWorkoutPlan] = useState([])
+  const [currentWorkoutPlan, setCurrentWorkoutPlan] = useState([]);
 
   return (
     <BrowserRouter>
       <ScrollTop />
-      <userContext.Provider value={{ isUserWorkingOut, setIsUserWorkingOut, timeLeftInWorkout, setTimeLeftInWorkout }}>
+      <userContext.Provider
+        value={{
+          isUserWorkingOut,
+          setIsUserWorkingOut,
+          timeLeftInWorkout,
+          setTimeLeftInWorkout,
+        }}
+      >
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/sign-in/*" element={<Signin />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/start-workout" element={<StartWorkout />} />
           <Route path="/view-workout-plan" element={<ViewWorkoutPlan />} />
-          <Route path="/customize-workout-plan" element={<CustomizeWorkoutPlan />} />
+          <Route
+            path="/customize-workout-plan"
+            element={<CustomizeWorkoutPlan />}
+          />
           <Route
             path="/library"
             element={
@@ -52,7 +62,7 @@ function App() {
                   <Profile />
                 </SignedIn>
                 <SignedOut>
-                  <RedirectToSignIn redirectUrl="/"/>
+                  <RedirectToSignIn redirectUrl="/" />
                 </SignedOut>
               </>
             }
