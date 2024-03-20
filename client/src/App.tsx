@@ -10,6 +10,7 @@ import ScrollTop from "./components/scrolltop";
 import StartWorkout from "./routes/startWorkout";
 import ViewWorkoutPlan from "./routes/viewWorkoutPlan";
 import CustomizeWorkoutPlan from "./routes/customizeWorkoutPlan";
+import WorkoutSummary from "./routes/workoutSummary";
 
 import "./App.css";
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="/faq" element={<Faq />} />
           <Route path="/start-workout" element={<StartWorkout />} />
           <Route path="/view-workout-plan" element={<ViewWorkoutPlan />} />
+          <Route path = "/workout-summary" element = {<WorkoutSummary/>} />
           <Route
             path="/customize-workout-plan"
             element={<CustomizeWorkoutPlan />}
