@@ -51,6 +51,11 @@ const navbar = () => {
                     </Link>
                   </li>
                   <li>
+                    <Link to="/workout-summary-dashboard" className="btn btn-ghost mx-1">
+                      Workout Summary
+                    </Link>
+                  </li>
+                  <li>
                     <UserButton />
                   </li>
                   <li>

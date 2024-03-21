@@ -749,6 +749,46 @@ def calculateTotaLoad():
 
     return load
 
+@app.get("/calculateTotalLoadarr")
+def calculateTotaLoad():
+    load = 0
+
+    for workout in workoutAppInstance.workoutPlan.weekOneExercises[0].getWorkouts():
+        if workout.getType() == "Weightlifting":
+            load = load + (workout.getSets()*workout.getReps()*workout.getWeight())
+
+    return load
+
+@app.get("/calculateTotalLoadarr")
+def calculateTotalLoadArr():
+    load_array = []
+
+    for workout in workoutAppInstance.workoutPlan.weekOneExercises[0].getWorkouts():
+        if workout.getType() == "Weightlifting":
+            load_array.append(workout.getSets()*workout.getReps()*workout.getWeight())
+
+    return load_array
+
+@app.get("/calculateTotalLoadarr")
+def calculateTotaLoad():
+    load = 0
+
+    for workout in workoutAppInstance.workoutPlan.weekOneExercises[0].getWorkouts():
+        if workout.getType() == "Weightlifting":
+            load = load + (workout.getSets()*workout.getReps()*workout.getWeight())
+
+    return load
+
+@app.get("/calculateTotalLoadarr")
+def calculateTotalLoadArr():
+    load_array = []
+
+    for workout in workoutAppInstance.workoutPlan.weekOneExercises[0].getWorkouts():
+        if workout.getType() == "Weightlifting":
+            load_array.append(workout.getSets()*workout.getReps()*workout.getWeight())
+
+    return load_array
+
 
 class EmailRequest(BaseModel):
     email: str
