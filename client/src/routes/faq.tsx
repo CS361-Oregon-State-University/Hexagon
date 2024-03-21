@@ -33,10 +33,10 @@ const faq = () => {
                     <label className="label">
                       <span className="label-text">Describe your issue:</span>
                     </label>
-                    <input type="text" placeholder="Type here" className="input input-bordered input-lg w-full" />                    
+                    <input type="text" className="input input-bordered input-lg w-full" />                    
                   </div>
                   <div className="form-control mt-6">
-                    <button className="btn btn-primary">Login</button>
+                    <button className="btn btn-primary">Send</button>
                   </div>
                 </form>
               </div>
