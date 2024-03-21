@@ -178,6 +178,16 @@ const landing = () => {
                       width="140"
                     />
                   </div>
+                  <div className="mx-auto flex w-full items-center justify-center p-4 sm:p-8">
+                    <img
+                      alt="Logo"
+                      className="overflow-hidden rounded-lg object-contain object-center"
+                      height="70"
+                      src="/jose.jpg"
+                      width="140"
+                    />
+                  </div>
+                  <div className="mx-auto flex w-full items-center justify-center p-4 sm:p-8"></div>
                 </div>
               </div>
               <div className="flex justify-center space-x-4">
