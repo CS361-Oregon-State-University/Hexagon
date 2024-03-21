@@ -181,10 +181,11 @@ user_stats = {
 
 
 class Weightlifting(workoutType):
-    def __init__(self, reps, sets, name):
+    def __init__(self, reps, sets, name, weight):
         self.reps = reps
         self.sets = sets
         self.name = name
+        self.weight = weight
 
     def getType(self):
         return "Weightlifting"
@@ -197,6 +198,9 @@ class Weightlifting(workoutType):
 
     def getName(self):
         return self.name
+
+    def getWeight(self):
+        return self.weight
 
     def setReps(self, reps):
         if (reps > 0):
@@ -258,13 +262,13 @@ class Calisthenics(workoutType):
 
 class workoutPlan(ABC):
     def __init__(self, weekOne, weekTwo, weekThree, weekFour):
-        self.__planName = "default"
-        self.__completion = 0
-        self.__goal = None
-        self.__weekOneExercises = weekOne
-        self.__weekTwoExercises = weekTwo
-        self.__weekThreeExercises = weekThree
-        self.__weekFourExercises = weekFour
+        self.planName = "default"
+        self.completion = 0
+        self.goal = None
+        self.weekOneExercises = weekOne
+        self.weekTwoExercises = weekTwo
+        self.weekThreeExercises = weekThree
+        self.weekFourExercises = weekFour
 
     def setCompletion(self, completion):
         self.__completion = completion
@@ -285,12 +289,15 @@ class workoutPlan(ABC):
                 "week four": self.__weekFourExercises}  # should update UI elements
 
     # given the week (1-4) and plan, sets weeks workouts
-    def setWorkoutPlan(self, week, plan):
+    def setWorkoutPlan(self, week, plan, add):
         weeks = {1: self.__weekOneExercises, 2: self.__weekTwoExercises,
                  3: self.__weekTwoExercises, 4: self.__weekFourExercises}
 
-        if week >= 1 and week <= 4:
+        if week >= 1 and week <= 4 and not add:
             weeks[week] = plan
+
+        if week >= 1 and week <= 4 and add:
+            weeks[week].append(plan)
 
 
 class Username(BaseModel):
@@ -385,8 +392,6 @@ class Day:
         return
 
     def addWorkout(self, workout):  # adds a workout to the list for today, caps at 3
-        if (len(self.workouts) >= 3):
-            return "You have reached the maximum amount of workouts for today"
         self.workouts.append(workout)
         return
 
@@ -407,11 +412,18 @@ class workoutApp:
     def __init__(self):
         self.isWorkingOut = False
         self.timeLeft = 0
+        self.day = Day("1", "0", [], "friday smth")
         self.currentWorkout = None
-        self.workoutPlan = workoutPlan([[Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
-            "High", 4 * 60, "Mountain Climbers")], [Cardio("High", 2 * 60, "High Knee"), Cardio("High", 3 * 60, "Squat"), Weightlifting(5, 3, "Benchpress")]], [], [], [])
+        self.workoutPlan = workoutPlan([Day(1, 0, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+            "High", 4 * 60, "Mountain Climbers"), Weightlifting(5, 3, "Benchpress", 180)], "Wed March 20th"), Day(1, 1, [Cardio("Medium", 5 * 60, "Running"), Weightlifting(5, 3, "Benchpress", 180), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                "High", 4 * 60, "Mountain Climbers")], "Wed March 21th"), Day(1, 2, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 22th"), Day(1, 3, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                        "High", 4 * 60, "Mountain Climbers")], "Wed March 23th"), Day(1, 4, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                            "High", 4 * 60, "Mountain Climbers")], "Wed March 24th"), Day(1, 5, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                                "High", 4 * 60, "Mountain Climbers")], "Wed March 25th"), Day(1, 6, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                                    "High", 4 * 60, "Mountain Climbers")], "Wed March 26th")], [], [], [])
         self.workouts = [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
-            "High", 4 * 60, "Mountain Climbers"), Cardio("High", 2 * 60, "High Knee"), Cardio("High", 3 * 60, "Squat"), Weightlifting(5, 3, "Benchpress")]
+            "High", 4 * 60, "Mountain Climbers"), Cardio("High", 2 * 60, "High Knee"), Cardio("High", 3 * 60, "Squat"), Weightlifting(5, 3, "Benchpress", 180)]
 
     def setIsInWorkout(self, timeLeft):
         self.isWorkingOut = True
@@ -444,7 +456,7 @@ def getWorkouts():
             ), "time": workout.getLength(), "type": workout.getType()})
         else:
             workouts.append({"name": workout.getName(), "reps": workout.getReps(
-            ), "sets": workout.getSets(), "type": workout.getType()})
+            ), "sets": workout.getSets(), "type": workout.getType(), "weight": workout.getWeight()})
     return workouts
 
 
@@ -460,7 +472,7 @@ class workoutInfo(BaseModel):
     timeLeft: int
 
 
-@app.post("/updateWorkoutProgress")
+@app.post("/updateWorkoutTime")
 def updateWorkoutProgress(timeLeft: workoutInfo):
     workoutAppInstance.setIsInWorkout(timeLeft.timeLeft)
 
@@ -473,3 +485,61 @@ def finishedWorkout():
 @app.get("/getCurrentExercise")
 def getCurrentExercise():
     return workoutAppInstance.getCurrentExercise()
+
+
+class addExercise(BaseModel):
+    name: str or None
+    type: str or None
+    intensity: str | None = None
+    length: int | None = None
+    reps: int | None = None
+    sets: int | None = None
+
+
+@app.post("/addExerciseToWorkoutPlan")
+def addExerciseToWorkoutPlan(exerciseToAdd: addExercise):
+    workout = None
+
+    if exerciseToAdd.type == "Cardio":
+        workout = Cardio(exerciseToAdd.intensity,
+                         exerciseToAdd.length, exerciseToAdd.name)
+    elif exerciseToAdd.type == "Weightlifting":
+        workout = Weightlifting(exerciseToAdd.reps,
+                                exerciseToAdd.sets, exerciseToAdd.name, exerciseToAdd.weight)
+    else:
+        workout = Calisthenics(exerciseToAdd.intensity, exerciseToAdd.reps,
+                               exerciseToAdd.sets, exerciseToAdd.name)
+
+    workoutAppInstance.workoutPlan.weekOneExercises[0].addWorkout(workout)
+
+
+@app.get("/getWorkoutPlan")
+def getDays():
+    workouts = []
+
+    for i in range(3):
+        workouts_week = []  # Initialize list for workouts of the week
+        for workout in workoutAppInstance.workoutPlan.weekOneExercises[i].getWorkouts():
+            workout_object = {}
+            if workout.getType() == "Cardio":
+                workouts_week.append({"name": workout.getName(), "intensity": workout.getIntensity(
+                ), "time": workout.getLength(), "type": workout.getType()})
+            else:
+                workouts_week.append({"name": workout.getName(), "reps": workout.getReps(
+                ), "sets": workout.getSets(), "type": workout.getType(), "weight": workout.getWeight()})
+        # Append the list of workouts for the current day to the main list
+        workouts.append(workouts_week)
+    return workouts
+
+
+@app.get("/calculateWorkoutTime")
+def calculateWorkoutTime():
+    time = 0
+
+    for workout in workoutAppInstance.workoutPlan.weekOneExercises[0].getWorkouts():
+        if workout.getType() == "Cardio":
+            time += workout.getLength()
+        else:
+            time += workout.getSets() * 60
+
+    return time

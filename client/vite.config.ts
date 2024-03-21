@@ -38,6 +38,22 @@ export default defineConfig({
         target: "http://127.0.0.1:8000/",
         changeOrigin: true,
       },
+      "/addExerciseToWorkoutPlan": {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
+      "/getWorkoutPlan": {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
+      "/calculateWorkoutTime": {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
+      "/updateWorkoutTime": {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
     },
   },
 });
