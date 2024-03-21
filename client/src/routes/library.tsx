@@ -13,6 +13,7 @@ type workout = {
   sets?: number;
   reps?: number;
   weight?: number;
+  videoLink?: any;
 };
 
 const Library = () => {
@@ -22,7 +23,7 @@ const Library = () => {
 
   const [workouts, setWorkouts] = useState<workout[]>([]);
   const [isUserWorkingOut, setIsUserWorkingOut] = useState(false);
-
+  const [videoLinks, setVideoLink] = useState([]);
   useEffect(() => {
     axios.get<workout[]>("/getWorkouts").then((res) => {
       setWorkouts(res.data);
@@ -31,6 +32,11 @@ const Library = () => {
     axios.get("/isUserWorkingOut").then((res) => {
       setIsUserWorkingOut(res.data);
     });
+
+    axios.get("/getVideoLinks").then((res) => {
+      setVideoLink(res.data);
+    });
+
   }, []);
 
   return (
@@ -51,6 +57,7 @@ const Library = () => {
               sets={workout.sets}
               reps={workout.reps}
               weight={workout.weight}
+              videoLink={videoLinks[workout.name]}
               setIsFromLibrary={setIsFromLibrary}
               isUserWorkingOut={isUserWorkingOut}
             />

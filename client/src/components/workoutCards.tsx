@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import ReactPlayer from 'react-player/youtube'
 import { useNavigate } from "react-router-dom";
 
 type workoutCards = {
@@ -13,6 +13,7 @@ type workoutCards = {
   setIsFromLibrary: any;
   isUserWorkingOut: boolean;
   weight?: number;
+  videoLink: string;
 };
 
 const handleExerciseFromCard = (setIsFromLibrary: any, navigate: any) => {
@@ -36,6 +37,7 @@ const workoutCards = ({
   weight,
   setIsFromLibrary,
   isUserWorkingOut,
+  videoLink,
 }: workoutCards) => {
   const navigate = useNavigate();
 
@@ -45,10 +47,7 @@ const workoutCards = ({
     <button className="transform transition-transform hover:translate-y-[-15px] hover:duration-500 hover:ease-in-out">
       <div className="card w-80 bg-base-100 shadow-xl hover:shadow-2xl transform transition-shadow mb-2">
         <figure>
-          <img
-            src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-            alt="Shoes"
-          />
+          <ReactPlayer url={videoLink} />
         </figure>
         <div className="card-body">
           <h2 className="card-title">
