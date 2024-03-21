@@ -1,35 +1,39 @@
 from enum import Enum
 from fastapi import FastAPI
 from pydantic import BaseModel
+from email.mime.text import MIMEText
+import smtplib
 
 
-class FAQCategory(str, Enum):
-    software = "Software"
-    workout = "Workout"
-    analytics = "Analytics"
-
-class FAQEntry(BaseModel):
-    question: str
-    answer: str
-    category: FAQCategory
+def send_email(subject, body, sender, recipients, password):
+    msg = MIMEText(body)
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = recipients
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+       smtp_server.login(sender, password)
+       smtp_server.sendmail(sender, recipients, msg.as_string())
+    print("Message sent!")
 
 # Updated list of FAQ entries with categories
-faq_entries = [
-    FAQEntry(question="How do I reset my password?", answer="Go to the settings page and click on 'Reset Password'.", category=FAQCategory.software),
-    FAQEntry(question="What workout plans are available?", answer="We offer a variety of plans including Cardio, Weightlifting, and Calisthenics.", category=FAQCategory.workout),
-    FAQEntry(question="How can I see my workout progress?", answer="Navigate to the analytics section to view your progress charts and statistics.", category=FAQCategory.analytics),
-]
-class UserComplaint(BaseModel):
-    username: str  
-    email: str  # Contact email
-    category: FAQCategory  # Reusing the FAQCategory for complaints
-    description: str  
+    
 
-# Example list to store complaints/bug reports (in a real application, this would be a database)
-user_complaints = []
-
-@app.post("/submit-complaint", response_model=UserComplaint)
-def submit_complaint(complaint: UserComplaint):
-    """Allow users to submit a complaint or report a bug."""
-    user_complaints.append(complaint.dict())
-    return complaint
+class UserComplaint():
+    def __init__(self, username, issue):
+        self.username = username
+        self.issue = issue
+    
+    def getIssue(self) -> str:
+        return self.issue
+    
+    def setIssue(self, issue: str) -> None:
+        self.issue = issue
+    
+    def getUsername(self) -> str:
+        return self.username
+    
+    def setUsername(self, username) -> None:
+        self.username = username
+    
+    def sendSupportEmail(self):
+        send_email("Support from" + self.username, self.issue, "teamhexagon278@gmail.com", "teamhexagon278@gmail.com","vdgd ruwr ftco ftoh")
