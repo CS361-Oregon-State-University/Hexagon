@@ -1,6 +1,6 @@
-from server.userClasses.notification import Notification
-from server.userClasses.injury import Injury
-from server.userClasses.device import Device
+from userClasses.notification import Notification
+from userClasses.injury import Injury
+from userClasses.device import Device
 import datetime
 
 class User:
