@@ -70,6 +70,22 @@ export default defineConfig({
         target: "http://127.0.0.1:8000/",
         changeOrigin: true,
       },
+      "/customizeWorkoutPlan": {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
+      "/calculateCaloriesBurned" : {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
+      "/calculateTotalLoad" : {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      }, 
+      "/email" : {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
     },
   },
 });

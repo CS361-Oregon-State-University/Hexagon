@@ -1,7 +1,10 @@
 const dropdown = (props: {
     dropdownName: string,
-    dropdownItems: string[]
+    dropdownItems: string[],
+    state?,
+    setPreference: Function
 }) => {
+
     return (
         <div className="flex-auto dropdown my-2">
             <div tabIndex={0} role="button" className="btn btn-info m-1 w-80">{props.dropdownName}</div>
@@ -12,15 +15,24 @@ const dropdown = (props: {
                             <div className="form-control">
                                 <label className="flex label cursor-pointer">
                                     <span className="grow label-text w-[100px]">{item}</span>
-                                    <input type="checkbox" className="flex-none checkbox checkbox-primary ml-5" />
+                                    <input
+                                        type="checkbox"
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                props.setPreference([...props.state, item]);
+                                            } else {
+                                                props.setPreference(props.state.filter(i => i !== item));
+                                            }
+                                        }} 
+                                        className="flex-none checkbox checkbox-primary ml-5" />
                                 </label>
                             </div>
                         ) : (
                             <>
                                 <div className="form-control">
                                     <label className="label cursor-pointer">
-                                        <span className="label-text w-[100px]">{item}</span> 
-                                        <input type="radio" name="radio-10" className="radio checked:bg-purple-500 ml-5" checked />
+                                        <span className="label-text w-[100px]">{item}</span>
+                                        <input type="radio" onClick={() => props.setPreference(item)} name="radio-10" className="radio checked:bg-purple-500 ml-5" />
                                     </label>
                                 </div>
                             </>

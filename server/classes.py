@@ -1,5 +1,9 @@
 from fastapi import FastAPI
+from userClasses.notification import *
+from user import User
+from typing import Optional
 from pydantic import BaseModel
+
 from abc import ABC
 from abc import abstractmethod
 
@@ -289,15 +293,18 @@ class workoutPlan(ABC):
                 "week four": self.__weekFourExercises}  # should update UI elements
 
     # given the week (1-4) and plan, sets weeks workouts
-    def setWorkoutPlan(self, week, plan, add):
-        weeks = {1: self.__weekOneExercises, 2: self.__weekTwoExercises,
-                 3: self.__weekTwoExercises, 4: self.__weekFourExercises}
+    def setWorkoutPlan(self, week: int, plan, add: bool):
+        weeks = {1: self.weekOneExercises, 2: self.weekTwoExercises,
+                 3: self.weekTwoExercises, 4: self.weekFourExercises}
 
         if week >= 1 and week <= 4 and not add:
             weeks[week] = plan
 
         if week >= 1 and week <= 4 and add:
             weeks[week].append(plan)
+            self.weekOneExercises = weeks[1]
+        
+        
 
 
 class Username(BaseModel):
@@ -407,22 +414,53 @@ class Day:
 
     # added pushWorkout to workoutPlan class
 
+class Preferences(BaseModel):
+    equipment: list | None = None
+    injuryList: list | None = None
+    goal: str | None = "Weight Loss"
 
 class workoutApp:
     def __init__(self):
+        self.DEFAULT_WORKOUT_PLAN = workoutPlan(
+            [Day(1, 0, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers"), Weightlifting(5, 3, "Benchpress", 180)], "Wed March 20th"), 
+            Day(1, 1, [Cardio("Medium", 5 * 60, "Running"), Weightlifting(5, 3, "Benchpress", 180), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 21th"), 
+            Day(1, 2, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 22th"), 
+            Day(1, 3, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 23th"), 
+            Day(1, 4, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 24th"), 
+            Day(1, 5, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 25th"), 
+            Day(1, 6, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 26th")], 
+            [], 
+            [], 
+            [])
         self.isWorkingOut = False
         self.timeLeft = 0
         self.day = Day("1", "0", [], "friday smth")
         self.currentWorkout = None
-        self.isFromLibrary = False
-        self.workoutPlan = workoutPlan([Day(1, 0, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
-            "High", 4 * 60, "Mountain Climbers"), Weightlifting(5, 3, "Benchpress", 180)], "Wed March 20th"), Day(1, 1, [Cardio("Medium", 5 * 60, "Running"), Weightlifting(5, 3, "Benchpress", 180), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
-                "High", 4 * 60, "Mountain Climbers")], "Wed March 21th"), Day(1, 2, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
-                    "High", 4 * 60, "Mountain Climbers")], "Wed March 22th"), Day(1, 3, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
-                        "High", 4 * 60, "Mountain Climbers")], "Wed March 23th"), Day(1, 4, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
-                            "High", 4 * 60, "Mountain Climbers")], "Wed March 24th"), Day(1, 5, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
-                                "High", 4 * 60, "Mountain Climbers")], "Wed March 25th"), Day(1, 6, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
-                                    "High", 4 * 60, "Mountain Climbers")], "Wed March 26th")], [], [], [])
+        self.workoutPlan = workoutPlan(
+            [Day(1, 0, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers"), Weightlifting(5, 3, "Benchpress", 180)], "Wed March 20th"), 
+            Day(1, 1, [Cardio("Medium", 5 * 60, "Running"), Weightlifting(5, 3, "Benchpress", 180), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 21th"), 
+            Day(1, 2, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 22th"), 
+            Day(1, 3, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 23th"), 
+            Day(1, 4, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 24th"), 
+            Day(1, 5, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 25th"), 
+            Day(1, 6, [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
+                    "High", 4 * 60, "Mountain Climbers")], "Wed March 26th")], 
+            [], 
+            [], 
+            [])
         self.workouts = [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
             "High", 4 * 60, "Mountain Climbers"), Cardio("High", 2 * 60, "High Knee"), Cardio("High", 3 * 60, "Squat"), Weightlifting(5, 3, "Benchpress", 180)]
 
@@ -443,6 +481,74 @@ class workoutApp:
                 self.workoutPlan.pop(0)
         else:
             self.workoutPlan.pop(i)
+    
+    def customizeWorkoutPlan(self, preferences: Preferences):
+        self.workoutPlan = workoutPlan([],[],[],[]) #clear workout plan
+        #first go through equipment
+        equipment = set(preferences.equipment) if preferences.equipment else set()
+        injuryList = set(preferences.injuryList) if preferences.injuryList else set()
+        goal = preferences.goal
+        workouts = {"treadmill2": Cardio("Low", 600, "Treadmill Walk, Pace 2"),
+                    "treadmill3": Cardio("Low", 600, "Treadmill Walk, Pace 3"),
+                    "treadmill4": Cardio("Low", 600, "Treadmill Walk, Pace 4"),
+                    "treadmill5": Cardio("Low", 600, "Treadmill Walk, Pace 5"),
+                    "benchpress": Weightlifting(5, 3, "Benchpress", 180),
+                    "treadmill6": Cardio("High", 600, "Treadmill Walk, Pace 6"),
+                    "burpies": Cardio("High", 3 * 60, "Burpies"),
+                    "pushups": Calisthenics("High", 20, 3, "Pushups"),
+                    "pullups": Calisthenics("High", 20, 3, "Pullups"),
+                    "walking": Cardio("Low", 600, "Walking")}
+        
+        if "Knee Injury" in injuryList:
+            equipment.discard("Treadmill")
+        for injury in injuryList:
+            print("INJURY:" + injury)
+            
+        for equip in equipment:
+            print("EQUIPMENT:" + equip)
+        
+        print("GOAL:" + goal)
+        if len(equipment) == 0 and len(injuryList) == 0:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["walking"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["walking"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["walking"]], "Wed March 20th")])
+        elif "Treadmill" in equipment and "Yoga mat" in equipment and "Flat Bench" in equipment and len(injuryList) == 0:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["treadmill3"], workouts["benchpress"], workouts["burpies"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["treadmill4"], workouts["benchpress"], workouts["burpies"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["treadmill5"], workouts["benchpress"], workouts["burpies"]], "Wed March 20th")])
+        elif "Treadmill" in equipment and "Yoga mat" in equipment and "Flat Bench" not in equipment:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["treadmill3"], workouts["burpies"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["treadmill4"], workouts["burpies"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["treadmill5"], workouts["burpies"]], "Wed March 20th")])
+        elif "Treadmill" in equipment and goal == "Weight Loss" and "Sprained Ankle" in injuryList:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["treadmill2"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["treadmill2"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["treadmill2"]], "Wed March 20th")])
+        elif "Yoga mat" in equipment:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["burpies"]], "Wed March 20th"),
+                                        Day(1, 1, [workouts["burpies"]], "Wed March 20th"),
+                                        Day(1, 2, [workouts["burpies"]], "Wed March 20th")])           
+        elif "Treadmill" in equipment and goal == "Weight Loss" and len(injuryList) == 0:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["treadmill4"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["treadmill4"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["treadmill4"]], "Wed March 20th")])
+        elif "Flat Bench" in equipment and "Treadmill" in equipment and "Sprained Ankle" not in injuryList:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["treadmill3"], workouts["benchpress"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["treadmill3"], workouts["benchpress"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["treadmill3"], workouts["benchpress"]], "Wed March 20th")])
+        elif "Flat Bench" in equipment and "Treadmill" in equipment:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["treadmill3"], workouts["benchpress"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["treadmill3"], workouts["benchpress"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["treadmill3"], workouts["benchpress"]], "Wed March 20th")])
+        elif "Flat Bench" in equipment and "Treadmill" not in equipment:
+                        self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["benchpress"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["benchpress"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["benchpress"]], "Wed March 20th")])
+        else: #default
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["benchpress"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["benchpress"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["benchpress"]], "Wed March 20th")])
+                
 
     def setIsFromLibrary(self, isFromLibrary):
         self.isFromLibrary = isFromLibrary
@@ -453,6 +559,9 @@ class workoutApp:
 
 workoutAppInstance = workoutApp()
 
+@app.post("/customizeWorkoutPlan")
+def customizeWorkoutPlan(preferences: Preferences):
+    workoutAppInstance.customizeWorkoutPlan(preferences)
 
 @app.get("/getWorkouts")
 def getWorkouts():
@@ -495,12 +604,12 @@ def getCurrentExercise():
 
 
 class addExercise(BaseModel):
-    name: str or None
-    type: str or None
-    intensity: str | None = None
-    length: int | None = None
-    reps: int | None = None
-    sets: int | None = None
+    name: Optional[str] = None
+    type: Optional[str] = None
+    intensity: Optional[str] = None
+    length: Optional[int] = None
+    reps: Optional[int] = None
+    sets: Optional[int] = None
 
 
 @app.post("/addExerciseToWorkoutPlan")
@@ -551,7 +660,6 @@ def calculateWorkoutTime():
 
     return time
 
-
 @app.get("/getCurrentWorkout")
 def getCurrentWorkout():
     time = None
@@ -596,3 +704,29 @@ def update_is_from_library(update: UpdateIsFromLibrary):
 @app.get("/getIsFromLibrary")
 def getIsFromLibrary():
     return workoutAppInstance.getIsFromLibrary()
+@app.get("/calculateCaloriesBurned")
+def calculateCaloriesBurned():
+    totCalorie = 0
+
+    for workout in workoutAppInstance.workoutPlan.weekOneExercises[0].getWorkouts():
+        if workout.getType() == "Cardio":
+            if workout.getIntensity() == "High":
+                totCalorie = totCalorie + (180*10*workout.getLength()/60)/200
+            elif workout.getIntensity() == "Medium":
+                totCalorie = totCalorie + (180*8.0*workout.getLength()/60)/200
+            else:
+                totCalorie = totCalorie + (180*3.3*workout.getLength()/60)/200
+        else:
+            totCalorie = totCalorie + (180*8.0*workout.getSets()*60)/200
+
+    return totCalorie
+
+@app.get("/calculateTotalLoad")
+def calculateTotaLoad():
+    load = 0
+
+    for workout in workoutAppInstance.workoutPlan.weekOneExercises[0].getWorkouts():
+        if workout.getType() == "Weightlifting":
+            load = load + (workout.getSets()*workout.getReps()*workout.getWeight())
+
+    return load
