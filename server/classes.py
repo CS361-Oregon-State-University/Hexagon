@@ -425,6 +425,15 @@ class workoutApp:
         self.workouts = [Cardio("Medium", 5 * 60, "Running"), Cardio("High", int(2.5 * 60), "Burpee"), Cardio(
             "High", 4 * 60, "Mountain Climbers"), Cardio("High", 2 * 60, "High Knee"), Cardio("High", 3 * 60, "Squat"), Weightlifting(5, 3, "Benchpress", 180)]
 
+        self.videoLinks = {
+                    "Running": "https://www.youtube.com/watch?v=_kGESn8ArrU",
+                    "Burpee": "https://www.youtube.com/watch?v=TU8QYVW0gDU",
+                    "Mountain Climbers": "https://www.youtube.com/watch?v=nmwgirgXLYM",
+                    "High Knee": "https://www.youtube.com/watch?v=ZNDHivUg7vA",
+                    "Squat": "https://www.youtube.com/watch?v=U5zrloYWwxw",
+                    "Benchpress": "https://www.youtube.com/watch?v=4Y2ZdHCOXokgit"
+                    }        
+    
     def setIsInWorkout(self, timeLeft):
         self.isWorkingOut = True
         self.timeLeft = timeLeft
@@ -543,3 +552,8 @@ def calculateWorkoutTime():
             time += workout.getSets() * 60
 
     return time
+
+@app.get("/getVideoLinks")
+def getVideoLinks():
+    return workoutAppInstance.videoLinks
+    
