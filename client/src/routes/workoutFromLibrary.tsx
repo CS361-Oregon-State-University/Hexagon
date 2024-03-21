@@ -105,7 +105,7 @@ const StartWorkoutLibrary = () => {
         <button
           className="btn btn-success mt-6"
           onClick={() => {
-            navigate("/workout-summary");
+            navigate("/library");
             finishWorkout();
           }}
         >
