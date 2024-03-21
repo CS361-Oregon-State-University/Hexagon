@@ -14,8 +14,10 @@ const exerciseCard = (props: {
           Exercise {props.exerciseNumber}: {props.exercise}
         </h2>
         {props.sets && <p>Sets: {props.sets}</p>}
+        {props.reps && <p>Reps: {props.reps}</p>}
         {props.weight && <p>Weight: {props.weight} lbs</p>}
         {props.duration && <p>Duration: {props.duration} sec</p>}
+        {props.intensity && <p>Intensity: {props.intensity}</p>}
       </div>
     </div>
   );

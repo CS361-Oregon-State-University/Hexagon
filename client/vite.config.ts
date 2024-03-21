@@ -54,6 +54,22 @@ export default defineConfig({
         target: "http://127.0.0.1:8000/",
         changeOrigin: true,
       },
+      "/updateCurrentWorkout": {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
+      "/getCurrentWorkout": {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
+      "/updateIsFromLibrary": {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
+      "/getIsFromLibrary": {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
     },
   },
 });

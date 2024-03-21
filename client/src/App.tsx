@@ -10,6 +10,7 @@ import ScrollTop from "./components/scrolltop";
 import StartWorkout from "./routes/startWorkout";
 import ViewWorkoutPlan from "./routes/viewWorkoutPlan";
 import CustomizeWorkoutPlan from "./routes/customizeWorkoutPlan";
+import StartWorkoutLibrary from "./routes/workoutFromLibrary";
 import WorkoutSummary from "./routes/workoutSummary";
 
 import "./App.css";
@@ -21,6 +22,7 @@ function App() {
   const [timeLeftInWorkout, setTimeLeftInWorkout] = useState(0);
   const [currentWorkoutPlan, setCurrentWorkoutPlan] = useState<any[]>([]);
   const [isFromLibrary, setIsFromLibrary] = useState(false);
+  const [currentWorkout, setCurrentWorkout] = useState<any>();
 
   return (
     <BrowserRouter>
@@ -35,6 +37,8 @@ function App() {
           setTimeLeftInWorkout,
           isFromLibrary,
           setIsFromLibrary,
+          currentWorkout,
+          setCurrentWorkout,
         }}
       >
         <Routes>
@@ -43,7 +47,11 @@ function App() {
           <Route path="/faq" element={<Faq />} />
           <Route path="/start-workout" element={<StartWorkout />} />
           <Route path="/view-workout-plan" element={<ViewWorkoutPlan />} />
-          <Route path = "/workout-summary" element = {<WorkoutSummary/>} />
+          <Route path="/workout-summary" element={<WorkoutSummary />} />
+          <Route
+            path="/start-workout-library"
+            element={<StartWorkoutLibrary />}
+          />
           <Route
             path="/customize-workout-plan"
             element={<CustomizeWorkoutPlan />}
