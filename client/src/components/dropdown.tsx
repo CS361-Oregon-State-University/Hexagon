@@ -15,19 +15,23 @@ const dropdown = (props: {
                             <div className="form-control">
                                 <label className="flex label cursor-pointer">
                                     <span className="grow label-text w-[100px]">{item}</span>
-                                    <input type="checkbox" onClick={() => props.setPreference(
-                                        [
-                                            ...props.state,
-                                            item
-                                        ]
-                                        )} className="flex-none checkbox checkbox-primary ml-5" />
+                                    <input
+                                        type="checkbox"
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                props.setPreference([...props.state, item]);
+                                            } else {
+                                                props.setPreference(props.state.filter(i => i !== item));
+                                            }
+                                        }} 
+                                        className="flex-none checkbox checkbox-primary ml-5" />
                                 </label>
                             </div>
                         ) : (
                             <>
                                 <div className="form-control">
                                     <label className="label cursor-pointer">
-                                        <span className="label-text w-[100px]">{item}</span> 
+                                        <span className="label-text w-[100px]">{item}</span>
                                         <input type="radio" onClick={() => props.setPreference(item)} name="radio-10" className="radio checked:bg-purple-500 ml-5" />
                                     </label>
                                 </div>
