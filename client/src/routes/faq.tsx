@@ -33,8 +33,7 @@ const faq = () => {
                     <label className="label">
                       <span className="label-text">Password</span>
                     </label>
-                    <input type="text" placeholder="Type here" className="input input-bordered input-lg w-full" />                    <label className="label">
-                    </label>
+                    <input type="text" placeholder="Type here" className="input input-bordered input-lg w-full max-w-xs" />                    
                   </div>
                   <div className="form-control mt-6">
                     <button className="btn btn-primary">Login</button>
