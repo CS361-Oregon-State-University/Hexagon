@@ -31,9 +31,9 @@ const faq = () => {
                   </div>
                   <div className="form-control">
                     <label className="label">
-                      <span className="label-text">Password</span>
+                      <span className="label-text">Describe your issue:</span>
                     </label>
-                    <input type="text" placeholder="Type here" className="input input-bordered input-lg w-full max-w-xs" />                    
+                    <input type="text" placeholder="Type here" className="input input-bordered input-lg w-full" />                    
                   </div>
                   <div className="form-control mt-6">
                     <button className="btn btn-primary">Login</button>
