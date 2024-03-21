@@ -172,27 +172,9 @@ const landing = () => {
                   <div className="mx-auto flex w-full items-center justify-center p-4 sm:p-8">
                     <img
                       alt="Logo"
-                      className="aspect-[2/1] overflow-hidden rounded-lg object-contain object-center"
+                      className="overflow-hidden rounded-lg object-contain object-center"
                       height="70"
-                      src="/placeholder.svg"
-                      width="140"
-                    />
-                  </div>
-                  <div className="mx-auto flex w-full items-center justify-center p-4 sm:p-8">
-                    <img
-                      alt="Logo"
-                      className="aspect-[2/1] overflow-hidden rounded-lg object-contain object-center"
-                      height="70"
-                      src="/placeholder.svg"
-                      width="140"
-                    />
-                  </div>
-                  <div className="mx-auto flex w-full items-center justify-center p-4 sm:p-8">
-                    <img
-                      alt="Logo"
-                      className="aspect-[2/1] overflow-hidden rounded-lg object-contain object-center"
-                      height="70"
-                      src="/placeholder.svg"
+                      src="/aiden.jpg"
                       width="140"
                     />
                   </div>

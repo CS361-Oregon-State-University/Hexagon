@@ -51,7 +51,7 @@ const navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <UserButton />
+                    <UserButton afterSignOutUrl="/" />
                   </li>
                   <li>
                     <Link to="/start-workout" className="btn btn-ghost mx-1">
@@ -59,7 +59,10 @@ const navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/view-workout-plan" className="btn btn-ghost mx-1">
+                    <Link
+                      to="/view-workout-plan"
+                      className="btn btn-ghost mx-1"
+                    >
                       View Workout Plan
                     </Link>
                   </li>

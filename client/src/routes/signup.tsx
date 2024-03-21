@@ -1,8 +1,8 @@
-import { SignIn } from "@clerk/clerk-react";
-import Footer from "../components/footer";
+import { SignUp } from "@clerk/clerk-react";
 import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 
-const signin = () => {
+const signup = () => {
   return (
     <>
       <Navbar />
@@ -16,7 +16,7 @@ const signin = () => {
               experience filled with tailored workouts and expert guidance.
             </p>
           </div>
-          <SignIn signUpUrl="/sign-up" />
+          <SignUp />
         </div>
       </div>
       <Footer />
@@ -24,4 +24,4 @@ const signin = () => {
   );
 };
 
-export default signin;
+export default signup;
