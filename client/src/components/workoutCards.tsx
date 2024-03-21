@@ -12,15 +12,9 @@ type workoutCards = {
   type: string;
   sets?: number;
   reps?: number;
-  setIsFromLibrary: any;
-  isUserWorkingOut: boolean;
+  isUserWorkingOut: any;
   weight?: number;
   videoLink: string;
-};
-
-const handleExerciseFromCard = (setIsFromLibrary: any, navigate: any) => {
-  setIsFromLibrary(true);
-  navigate("/start-workout");
 };
 
 const handleAddExerciseToWorkoutPlan = (workoutObj: any) => {
@@ -37,14 +31,28 @@ const workoutCards = ({
   sets,
   reps,
   weight,
-  setIsFromLibrary,
   isUserWorkingOut,
   videoLink,
 }: workoutCards) => {
   const navigate = useNavigate();
-
   const time = length ? length / 60 : 0;
 
+  const handleExerciseFromCard = (navigate: any) => {
+    axios
+      .post("/updateCurrentWorkout", {
+        name: name,
+        length: length,
+        intensity: intensity,
+        type: type,
+        sets: sets,
+        reps: reps,
+        weight: weight,
+      })
+      .then(() => navigate("/start-workout-library"))
+      .catch((error) =>
+        console.error("Error updating current workout:", error)
+      );
+  };
   return (
     <button className="transform transition-transform hover:translate-y-[-15px] hover:duration-500 hover:ease-in-out">
       <div className="card w-80 bg-base-100 shadow-xl hover:shadow-2xl transform transition-shadow mb-2">
@@ -93,7 +101,7 @@ const workoutCards = ({
           <button
             className="btn btn-success w-36 ml-2 mr-4"
             disabled={isUserWorkingOut}
-            onClick={() => handleExerciseFromCard(setIsFromLibrary, navigate)}
+            onClick={() => handleExerciseFromCard(navigate)}
           >
             Start this exercise
           </button>

@@ -17,9 +17,11 @@ type workout = {
 };
 
 const Library = () => {
+
   const {
     setIsFromLibrary, // Destructure the context value here
   } = useContext(userContext); // Use the useContext hook to access context
+
   const [workouts, setWorkouts] = useState<workout[]>([]);
   const [isUserWorkingOut, setIsUserWorkingOut] = useState(false);
   const [workouts, setWorkouts] = useState<workout[]>([]);
@@ -31,7 +33,7 @@ const Library = () => {
     });
 
     axios.get("/isUserWorkingOut").then((res) => {
-      setIsUserWorkingOut(res.data);
+      setIsUserWorkingOut(res.data.isWorkingOut);
     });
     axios.get("/getVideoLinks").then((res) => {
       setVideoLink(res.data);
@@ -56,8 +58,10 @@ const Library = () => {
               sets={workout.sets}
               reps={workout.reps}
               weight={workout.weight}
+
               videoLink={videoLinks[workout.name]}
               setIsFromLibrary={setIsFromLibrary}
+
               isUserWorkingOut={isUserWorkingOut}
             />
           ))}
