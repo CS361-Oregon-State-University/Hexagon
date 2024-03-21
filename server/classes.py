@@ -525,7 +525,9 @@ class workoutApp:
                                                 Day(1, 1, [workouts["benchpress"]], "Wed March 20th"),
                                                 Day(1, 2, [workouts["benchpress"]], "Wed March 20th")])
         else: #default
-            self.workoutPlan.weekOneExercises = self.DEFAULT_WORKOUT_PLAN.weekFourExercises
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["benchpress"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["benchpress"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["benchpress"]], "Wed March 20th")])
                 
 
 
