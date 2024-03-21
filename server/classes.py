@@ -9,6 +9,7 @@ from abc import abstractmethod
 
 app = FastAPI()
 
+user = User()
 
 class library:
     def __init__(self, courses):
@@ -415,9 +416,9 @@ class Day:
     # added pushWorkout to workoutPlan class
 
 class Preferences(BaseModel):
-    equipment: list | None = None
-    injuryList: list | None = None
-    goal: str | None = "Weight Loss"
+    equipment: Optional[list] = None
+    injuryList: Optional[list] = None
+    goal: Optional[str] = "Weight Loss"
 
 class workoutApp:
     def __init__(self):
@@ -566,6 +567,7 @@ class workoutApp:
         return self.isFromLibrary
 
 
+
 workoutAppInstance = workoutApp()
 
 @app.post("/customizeWorkoutPlan")
@@ -690,12 +692,12 @@ def getCurrentWorkout():
 
 class WorkoutUpdate(BaseModel):
     name: str
-    length: int | None = None
-    intensity: str | None = None
+    length: Optional[int] = None
+    intensity: Optional[str] = None
     type: str
-    sets: int | None = None
-    reps: int | None = None
-    weight: int | None = None
+    sets: Optional[int] = None
+    reps: Optional[int] = None
+    weight: Optional[int] = None
 
 
 @app.post("/updateCurrentWorkout")
@@ -746,3 +748,19 @@ def calculateTotaLoad():
             load = load + (workout.getSets()*workout.getReps()*workout.getWeight())
 
     return load
+
+
+class EmailRequest(BaseModel):
+    email: str
+
+@app.post("/submitEmail")
+def submitEmail(received_email: EmailRequest):
+    user.setEmail(received_email.email)
+    print("Received email:", received_email)
+    return {"message": "Email submitted successfully"}
+
+@app.post("/sendEmailNotification")
+def sendEmail():
+    notif = Notification("Workingout?",
+        "Hi there, are you planning on working out today?", user.getEmail())
+    notif.sendNotification()

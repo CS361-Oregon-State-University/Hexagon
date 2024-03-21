@@ -91,10 +91,14 @@ export default defineConfig({
         target: "http://127.0.0.1:8000/",
         changeOrigin: true,
       }, 
-      "/email" : {
+      "/submitEmail" : {
         target: "http://127.0.0.1:8000/",
         changeOrigin: true,
       },
+      "/sendEmailNotification" : {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      }
     },
   },
 });
