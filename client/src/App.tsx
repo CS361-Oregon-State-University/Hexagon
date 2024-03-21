@@ -23,7 +23,6 @@ function App() {
   const [currentWorkoutPlan, setCurrentWorkoutPlan] = useState<any[]>([]);
   const [isFromLibrary, setIsFromLibrary] = useState(false);
 
-
   return (
     <BrowserRouter>
       <ScrollTop />

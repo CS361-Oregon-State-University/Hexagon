@@ -1,5 +1,9 @@
 from fastapi import FastAPI
+from userClasses.notification import *
+from user import User
+from typing import Optional
 from pydantic import BaseModel
+
 from abc import ABC
 from abc import abstractmethod
 
@@ -497,13 +501,12 @@ def getCurrentExercise():
 
 
 class addExercise(BaseModel):
-    name: str or None
-    type: str or None
-    intensity: str | None = None
-    length: int | None = None
-    reps: int | None = None
-    sets: int | None = None
-
+    name: Optional[str] = None
+    type: Optional[str] = None
+    intensity: Optional[str] = None
+    length: Optional[int] = None
+    reps: Optional[int] = None
+    sets: Optional[int] = None
 
 @app.post("/addExerciseToWorkoutPlan")
 def addExerciseToWorkoutPlan(exerciseToAdd: addExercise):
@@ -553,7 +556,35 @@ def calculateWorkoutTime():
 
     return time
 
+
 @app.get("/getVideoLinks")
 def getVideoLinks():
     return workoutAppInstance.videoLinks
     
+@app.get("/calculateCaloriesBurned")
+def calculateCaloriesBurned():
+    totCalorie = 0
+
+    for workout in workoutAppInstance.workoutPlan.weekOneExercises[0].getWorkouts():
+        if workout.getType() == "Cardio":
+            if workout.getIntensity() == "High":
+                totCalorie = totCalorie + (180*10*workout.getLength()/60)/200
+            elif workout.getIntensity() == "Medium":
+                totCalorie = totCalorie + (180*8.0*workout.getLength()/60)/200
+            else:
+                totCalorie = totCalorie + (180*3.3*workout.getLength()/60)/200
+        else:
+            totCalorie = totCalorie + (180*8.0*workout.getSets()*60)/200
+
+    return totCalorie
+
+@app.get("/calculateTotalLoad")
+def calculateTotaLoad():
+    load = 0
+
+    for workout in workoutAppInstance.workoutPlan.weekOneExercises[0].getWorkouts():
+        if workout.getType() == "Weightlifting":
+            load = load + (workout.getSets()*workout.getReps()*workout.getWeight())
+
+    return load
+
