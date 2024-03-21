@@ -1,5 +1,5 @@
 # Email stuff
-
+"""
 from fastapi import FastAPI
 from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
 from pydantic import BaseModel, EmailStr
@@ -36,17 +36,13 @@ conf = ConnectionConfig(
 
 app = FastAPI()
 
-html = f"""
-<h4>Did you plan on working out today?</h4>
-<br>
-<p>Hey there lazy bum, we noticed you haven't worked out yet. You planning on getting off your fat ass today or what?</p>
-"""
+
 
 
 
 @app.post("/email")
 async def simple_send(email: EmailSchema) -> JSONResponse:
-    html = """<p>Hi this test mail, thanks for using Fastapi-mail</p> """
+    
 
     message = MessageSchema(
         subject="Fastapi-Mail module",
@@ -80,4 +76,3 @@ class Notification:
     
     def sendNotification(): #TODO: finish when push notification functionality is implemented, part of business logic
         return
-        """
