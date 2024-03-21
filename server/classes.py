@@ -468,7 +468,7 @@ class workoutApp:
         self.isWorkingOut = True
         self.timeLeft = timeLeft
 
-    def getCurrentExercise(self):
+    def getCurrentWorkout(self):
         return self.currentWorkout
 
     def setFinishedWorkout(self):
@@ -549,6 +549,12 @@ class workoutApp:
                                                 Day(1, 1, [workouts["benchpress"]], "Wed March 20th"),
                                                 Day(1, 2, [workouts["benchpress"]], "Wed March 20th")])
                 
+
+    def setIsFromLibrary(self, isFromLibrary):
+        self.isFromLibrary = isFromLibrary
+
+    def getIsFromLibrary(self):
+        return self.isFromLibrary
 
 
 workoutAppInstance = workoutApp()
@@ -654,6 +660,50 @@ def calculateWorkoutTime():
 
     return time
 
+@app.get("/getCurrentWorkout")
+def getCurrentWorkout():
+    time = None
+
+    if workoutAppInstance.currentWorkout["type"] == "Cardio":
+        time = workoutAppInstance.currentWorkout["length"]
+    else:
+        time = workoutAppInstance.currentWorkout["sets"] * 60
+
+    print(workoutAppInstance.getCurrentWorkout(), time)
+    return {"exercise": workoutAppInstance.getCurrentWorkout(), "time": time}
+
+
+class WorkoutUpdate(BaseModel):
+    name: str
+    length: int | None = None
+    intensity: str | None = None
+    type: str
+    sets: int | None = None
+    reps: int | None = None
+    weight: int | None = None
+
+
+@app.post("/updateCurrentWorkout")
+def updateCurrentWorkout(updateItem: WorkoutUpdate):
+    workoutAppInstance.currentWorkout = {"name": updateItem.name, "length": updateItem.length, "intensity": updateItem.intensity,
+                                         "type": updateItem.type, "sets": updateItem.sets, "reps": updateItem.reps, "weight": updateItem.weight}
+    print(workoutAppInstance.currentWorkout)
+
+
+class UpdateIsFromLibrary(BaseModel):
+    isFromLibrary: bool
+
+
+@app.post("/updateIsFromLibrary")
+def update_is_from_library(update: UpdateIsFromLibrary):
+    print(update)
+    workoutAppInstance.setIsFromLibrary(update.isFromLibrary)
+    return {"message": "Update successful"}
+
+
+@app.get("/getIsFromLibrary")
+def getIsFromLibrary():
+    return workoutAppInstance.getIsFromLibrary()
 @app.get("/calculateCaloriesBurned")
 def calculateCaloriesBurned():
     totCalorie = 0

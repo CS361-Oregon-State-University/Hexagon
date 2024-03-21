@@ -61,7 +61,7 @@ const ViewWorkoutPlan = () => {
         ))}
       </div>
       <Link to="/customize-workout-plan" className="mx-1">
-        <button className="ml-[40rem] btn btn-success mt-6">
+        <button className="ml-[30rem] btn btn-success mt-6">
           Customize Workout Plan
         </button>
       </Link>
