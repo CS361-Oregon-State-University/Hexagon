@@ -51,7 +51,16 @@ const navbar = () => {
                     </Link>
                   </li>
                   <li>
+
+                    <Link to="/workout-summary-dashboard" className="btn btn-ghost mx-1">
+                      Workout Summary
+                    </Link>
+                  </li>
+                  <li>
+                    <UserButton />
+
                     <UserButton afterSignOutUrl="/" />
+
                   </li>
                   <li>
                     <Link to="/start-workout" className="btn btn-ghost mx-1">

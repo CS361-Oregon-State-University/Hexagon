@@ -98,14 +98,17 @@ const workoutCards = ({
         <div className="join flex ">
           <button
             className="btn btn-success w-36 ml-2 mr-4"
+            
             disabled={isUserWorkingOut}
+            //disabled={false}
             onClick={() => handleExerciseFromCard(navigate)}
           >
             Start this exercise
           </button>
           <button
             className="btn btn-info w-36"
-            disabled={isUserWorkingOut}
+             disabled={isUserWorkingOut}
+         //  disabled={false}
             onClick={() =>
               handleAddExerciseToWorkoutPlan({
                 type: type,

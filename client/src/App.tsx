@@ -13,7 +13,7 @@ import ViewWorkoutPlan from "./routes/viewWorkoutPlan";
 import CustomizeWorkoutPlan from "./routes/customizeWorkoutPlan";
 import StartWorkoutLibrary from "./routes/workoutFromLibrary";
 import WorkoutSummary from "./routes/workoutSummary";
-
+import WorkoutSummaryDash from "./routes/workoutSummaryDash";
 import "./App.css";
 
 export const userContext = createContext({});
@@ -50,6 +50,9 @@ function App() {
           <Route path="/start-workout" element={<StartWorkout />} />
           <Route path="/view-workout-plan" element={<ViewWorkoutPlan />} />
           <Route path="/workout-summary" element={<WorkoutSummary />} />
+          <Route 
+            path="/workout-summary-dashboard" 
+            element={<WorkoutSummaryDash/>} />
           <Route
             path="/start-workout-library"
             element={<StartWorkoutLibrary />}
