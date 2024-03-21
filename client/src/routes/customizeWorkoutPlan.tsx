@@ -1,20 +1,41 @@
 import Navbar from "../components/navbar";
 import Dropdown from "../components/dropdown";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 const customizeWorkoutPlan = () => {
+    const [equipment, setEquipment] = useState([]);
+    const [goal, setGoal] = useState("");
+    const [injury, setInjury] = useState([]);
+
+    const handleSubmit = (preferencesObj: any) => {
+        axios.post("/customizeWorkoutPlan", preferencesObj).then(() => {
+            console.log("preferences changed");
+        });
+        console.log(equipment, goal, injury)
+    };
 
     return (
         <>
             <Navbar />
             <div className="flex flex-col h-screen justify-between">
                 <main>
+                    <form>
                     <div className="flex flex-col items-center justify-center">
                         <div className="flex-auto badge badge-neutral text-2xl p-5 m-5">Customize workout plan</div>
-                        <Dropdown dropdownName="Add Equipment" dropdownItems={["Treadmill", "Yoga mat", "Flat Bench"]} />
-                        <Dropdown dropdownName="Set Goal" dropdownItems={["Weight Loss", "Weight Gain"]} />
-                        <Dropdown dropdownName="Add Injury" dropdownItems={["Knee Injury", "Back Injury", "Sprained Ankle"]} />
-                        <button className="btn btn-success mt-6">Confirm</button>
+                        
+                            <Dropdown state={equipment} setPreference={setEquipment} dropdownName="Add Equipment" dropdownItems={["Treadmill", "Yoga mat", "Flat Bench"]} />
+                            <Dropdown setPreference={setGoal} dropdownName="Set Goal" dropdownItems={["Weight Loss", "Weight Gain"]} />
+                            <Dropdown state={injury}setPreference={setInjury} dropdownName="Add Injury" dropdownItems={["Knee Injury", "Back Injury", "Sprained Ankle"]} />
+                        
+                        <button onClick={() => handleSubmit({
+                            equipment: equipment,
+                            goal: goal,
+                            injuryList: injury,
+                        })
+                        } type="submit" className="btn btn-success mt-6">Confirm</button>
                     </div>
+                    </form>
                     <div className="card w-96 bg-warning text-primary-content mt-5 ml-[5rem]">
                         <div className="card-body text-black">
                             <h2 className="card-title">Warning</h2>
