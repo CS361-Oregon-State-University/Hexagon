@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
 import WorkoutCards from "../components/workoutCards";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react"; // Import useContext here
 import axios from "axios";
+import { userContext } from "../App";
 
 type workout = {
   name: string;
@@ -11,21 +12,26 @@ type workout = {
   type: string;
   sets?: number;
   reps?: number;
+  weight?: number;
 };
 
-const library = () => {
+const Library = () => {
+  const {
+    setIsFromLibrary, // Destructure the context value here
+  } = useContext(userContext); // Use the useContext hook to access context
+
   const [workouts, setWorkouts] = useState<workout[]>([]);
+  const [isUserWorkingOut, setIsUserWorkingOut] = useState(false);
 
   useEffect(() => {
     axios.get<workout[]>("/getWorkouts").then((res) => {
-      console.log(res.data);
       setWorkouts(res.data);
     });
-  }, []);
 
-  if (workouts) {
-    console.log(workouts, "updated");
-  }
+    axios.get("/isUserWorkingOut").then((res) => {
+      setIsUserWorkingOut(res.data);
+    });
+  }, []);
 
   return (
     <>
@@ -44,6 +50,9 @@ const library = () => {
               type={workout.type}
               sets={workout.sets}
               reps={workout.reps}
+              weight={workout.weight}
+              setIsFromLibrary={setIsFromLibrary}
+              isUserWorkingOut={isUserWorkingOut}
             />
           ))}
         </div>
@@ -65,4 +74,4 @@ const library = () => {
   );
 };
 
-export default library;
+export default Library;

@@ -19,6 +19,7 @@ const landing = () => {
   if ((<SignedIn />)) {
     axios.get("/isUserWorkingOut").then((res) => {
       if (res.data.isUserWorkingOut) {
+        console.log(res.data);
         setIsUserWorkingOut(res.data.isWorkingOut);
         setTimeLeftInWorkout(res.data.timeLeft);
       } else {

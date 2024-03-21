@@ -18,17 +18,22 @@ export const userContext = createContext({});
 function App() {
   const [isUserWorkingOut, setIsUserWorkingOut] = useState(false);
   const [timeLeftInWorkout, setTimeLeftInWorkout] = useState(0);
-  const [currentWorkoutPlan, setCurrentWorkoutPlan] = useState([]);
+  const [currentWorkoutPlan, setCurrentWorkoutPlan] = useState<any[]>([]);
+  const [isFromLibrary, setIsFromLibrary] = useState(false);
 
   return (
     <BrowserRouter>
       <ScrollTop />
       <userContext.Provider
         value={{
+          currentWorkoutPlan,
+          setCurrentWorkoutPlan,
           isUserWorkingOut,
           setIsUserWorkingOut,
           timeLeftInWorkout,
           setTimeLeftInWorkout,
+          isFromLibrary,
+          setIsFromLibrary,
         }}
       >
         <Routes>
