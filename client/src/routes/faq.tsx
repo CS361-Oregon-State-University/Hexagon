@@ -1,8 +1,28 @@
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import FAQPost from "../components/faqPosts";
+import { useState } from "react";
+import { useUser } from "@clerk/clerk-react";
+import axios from "axios";
+
+const handleSendSupportEmail = async (username: any, formData: string, setFormData: any) => {
+  console.log('ran')
+  try {
+    await axios.post('/sendSupportEmail', { username, formData }).then(() => {
+      setFormData("");
+    });
+    console.log('Support email sent successfully:');
+  } catch (error) {
+    console.error('Error sending support email:', error);
+  }
+};
 
 const faq = () => {
+  const [formData, setFormData] = useState("");
+
+  const { user } = useUser();
+  const username = user?.username;
+
   return (
     <>
       <Navbar />
@@ -22,23 +42,15 @@ const faq = () => {
                 <h1 className="text-5xl font-bold">Can't find your question?</h1>
               </div>
               <div className="card shrink-0 w-screen max-w-4xl shadow-2xl bg-base-100">
-                <form className="card-body">
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Email</span>
-                    </label>
-                    <input type="email" placeholder="email" className="input input-bordered" required />
-                  </div>
-                  <div className="form-control">
+                <div className="card-body">
                     <label className="label">
                       <span className="label-text">Describe your issue:</span>
                     </label>
-                    <input type="text" placeholder="Type here" className="input input-bordered input-lg w-full" />                    
+                    <input type="text" className="input input-bordered input-lg w-full" value={formData} onChange={(e) => setFormData(e.target.value)} />                    
                   </div>
                   <div className="form-control mt-6">
-                    <button className="btn btn-primary">Login</button>
+                    <button className="btn btn-primary" onClick={() => handleSendSupportEmail(username, formData, setFormData)}>Send</button>
                   </div>
-                </form>
               </div>
             </div>
           </div>

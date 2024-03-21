@@ -2,6 +2,7 @@ import { useState, createContext } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 import Signin from "./routes/signin";
+import Signup from "./routes/signup";
 import Landing from "./routes/landing";
 import Library from "./routes/library";
 import Profile from "./routes/profile";
@@ -14,7 +15,6 @@ import StartWorkoutLibrary from "./routes/workoutFromLibrary";
 import WorkoutSummary from "./routes/workoutSummary";
 import WorkoutSummaryDash from "./routes/workoutSummaryDash";
 import "./App.css";
-
 
 export const userContext = createContext({});
 
@@ -45,6 +45,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/sign-in/*" element={<Signin />} />
+          <Route path="/sign-up/*" element={<Signup />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/start-workout" element={<StartWorkout />} />
           <Route path="/view-workout-plan" element={<ViewWorkoutPlan />} />
