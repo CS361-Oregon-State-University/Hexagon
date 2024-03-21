@@ -492,7 +492,8 @@ class workoutApp:
                     "treadmill6": Cardio("High", 600, "Treadmill Walk, Pace 6"),
                     "burpies": Cardio("High", 3 * 60, "Burpies"),
                     "pushups": Calisthenics("High", 20, 3, "Pushups"),
-                    "pullups": Calisthenics("High", 20, 3, "Pullups")}
+                    "pullups": Calisthenics("High", 20, 3, "Pullups"),
+                    "walking": Cardio("Low", 600, "Walking")}
         
         if "Knee Injury" in injuryList:
             equipment.discard("Treadmill")
@@ -503,11 +504,26 @@ class workoutApp:
             print("EQUIPMENT:" + equip)
         
         print("GOAL:" + goal)
-    
-        if "Treadmill" in equipment and goal == "Weight Loss" and "Sprained Ankle" in injuryList:
+        if len(equipment) == 0 and len(injuryList) == 0:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["walking"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["walking"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["walking"]], "Wed March 20th")])
+        elif "Treadmill" in equipment and "Yoga mat" in equipment and "Flat Bench" in equipment and len(injuryList) == 0:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["treadmill3"], workouts["benchpress"], workouts["burpies"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["treadmill4"], workouts["benchpress"], workouts["burpies"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["treadmill5"], workouts["benchpress"], workouts["burpies"]], "Wed March 20th")])
+        elif "Treadmill" in equipment and "Yoga mat" in equipment and "Flat Bench" not in equipment:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["treadmill3"], workouts["burpies"]], "Wed March 20th"),
+                                                Day(1, 1, [workouts["treadmill4"], workouts["burpies"]], "Wed March 20th"),
+                                                Day(1, 2, [workouts["treadmill5"], workouts["burpies"]], "Wed March 20th")])
+        elif "Treadmill" in equipment and goal == "Weight Loss" and "Sprained Ankle" in injuryList:
             self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["treadmill2"]], "Wed March 20th"),
                                                 Day(1, 1, [workouts["treadmill2"]], "Wed March 20th"),
                                                 Day(1, 2, [workouts["treadmill2"]], "Wed March 20th")])
+        elif "Yoga mat" in equipment:
+            self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["burpies"]], "Wed March 20th"),
+                                        Day(1, 1, [workouts["burpies"]], "Wed March 20th"),
+                                        Day(1, 2, [workouts["burpies"]], "Wed March 20th")])           
         elif "Treadmill" in equipment and goal == "Weight Loss" and len(injuryList) == 0:
             self.workoutPlan.weekOneExercises = ([Day(1, 0, [workouts["treadmill4"]], "Wed March 20th"),
                                                 Day(1, 1, [workouts["treadmill4"]], "Wed March 20th"),
