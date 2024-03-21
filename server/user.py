@@ -5,18 +5,18 @@ import datetime
 
 class User:
     def __init__(self):
-        self.__firstName = ""
-        self.__lastName = ""
-        self.__email = ""
-        self.__password = ""
+        self.__firstName = str
+        self.__lastName = str
+        self.__email = str
+        self.__password = str
         self.__sex = ''
         self.__gender = ''
         self.__weight = 0
         self.__height = 0
-        self.__birthday = datetime.datetime(0, 0, 0) #year, month, day
+        self.__birthday = datetime.datetime(2003, 1, 30) #year, month, day
         self.__experienceLevels = [] #int[]
-        self.__injuryList = Injury()
-        self.__deviceList = Device() #
+        self.__injuryList = Injury("","","")
+        self.__deviceList = Device("","","") #
     
     def getFirstName(self) -> str: 
         return self.__firstName

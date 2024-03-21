@@ -1,66 +1,35 @@
 # Email stuff
-"""
-from fastapi import FastAPI
-from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
-from pydantic import BaseModel, EmailStr
-from starlette.responses import JSONResponse 
-from typing import List
 
-# dotenv
-from dotenv import dotenv_values
-
-#credentials
-credentials = dotenv_values(".env")
+#goil xnuq fqur auzz
+import smtplib
+from email.mime.text import MIMEText
 
 
-
-class EmailSchema(BaseModel):
-    email: List[EmailStr]
-
-class Notification(BaseModel):
-    notificationTitle : str
-    notificationText : str
+subject = "Email Subject"
+body = "This is the body of the text message"
+sender = "ayushayubaruah@gmail.com"
+recipients = "ayushayubaruah@gmail.com"
+password = "goil xnuq fqur auzz"
 
 
-conf = ConnectionConfig(
-    MAIL_USERNAME = credentials['EMAIL'],
-    MAIL_PASSWORD = credentials['PASS'],
-    MAIL_FROM = credentials['EMAIL'],
-    MAIL_PORT = 465,
-    MAIL_SERVER = "smtp.gmail.com",
-    MAIL_STARTTLS = False,
-    MAIL_SSL_TLS = True,
-    USE_CREDENTIALS = True,
-    VALIDATE_CERTS = True
-)
-
-app = FastAPI()
+def send_email(subject, body, sender, recipients, password):
+    msg = MIMEText(body)
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = recipients
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+       smtp_server.login(sender, password)
+       smtp_server.sendmail(sender, recipients, msg.as_string())
+    print("Message sent!")
 
 
+#send_email(subject, body, sender, recipients, password)
 
-
-
-@app.post("/email")
-async def simple_send(email: EmailSchema) -> JSONResponse:
-    
-
-    message = MessageSchema(
-        subject="Fastapi-Mail module",
-        recipients=email.dict().get("email"),
-        body=html,
-        subtype=MessageType.html)
-
-    fm = FastMail(conf)
-    await fm.send_message(message)
-    return JSONResponse(status_code=200, content={"message": "email has been sent"})
-
-
-
-"""
 class Notification:
-    def __init__(self, notificationTitle, notificationText):
+    def __init__(self, notificationTitle, notificationText, recipientEmail):
         self.__notificationTitle = notificationTitle
         self.__notificationText = notificationText
+        self.recipientEmail = recipientEmail
     
     def getNotificationTitle(self) -> str:
         return self.__notificationTitle
@@ -74,5 +43,6 @@ class Notification:
     def setNotificationText(self, text) -> None:
         self.__notificationText = text
     
-    def sendNotification(): #TODO: finish when push notification functionality is implemented, part of business logic
+    def sendNotification(self): #TODO: finish when push notification functionality is implemented, part of business logic
+        send_email(self.__notificationTitle, self.__notificationText, "teamhexagon278@gmail.com", self.recipientEmail,"vdgd ruwr ftco ftoh")
         return
