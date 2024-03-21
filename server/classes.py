@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from userClasses.notification import *
 from user import User
 from typing import Optional
+import FAQ
 from pydantic import BaseModel
 
 from abc import ABC
@@ -764,3 +765,14 @@ def sendEmail():
     notif = Notification("Workingout?",
         "Hi there, are you planning on working out today?", user.getEmail())
     notif.sendNotification()
+    
+
+class emailInfo(BaseModel):
+    formData: str
+    username: str
+
+@app.post("/sendSupportEmail")
+def sendEmail(email: emailInfo):
+    complaint = FAQ.UserComplaint(email.username, email.formData)
+    complaint.sendSupportEmail()
+    return {"message": "Email sent successfully"}
