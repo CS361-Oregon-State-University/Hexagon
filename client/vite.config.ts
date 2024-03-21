@@ -54,6 +54,14 @@ export default defineConfig({
         target: "http://127.0.0.1:8000/",
         changeOrigin: true,
       },
+
+
+      "/getVideoLinks": {
+        target: "http://127.0.0.1:8000/",
+        changeOrigin: true,
+      },
+
+
       "/updateCurrentWorkout": {
         target: "http://127.0.0.1:8000/",
         changeOrigin: true,
@@ -74,6 +82,7 @@ export default defineConfig({
         target: "http://127.0.0.1:8000/",
         changeOrigin: true,
       },
+
       "/calculateCaloriesBurned" : {
         target: "http://127.0.0.1:8000/",
         changeOrigin: true,

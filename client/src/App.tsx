@@ -15,6 +15,7 @@ import WorkoutSummary from "./routes/workoutSummary";
 
 import "./App.css";
 
+
 export const userContext = createContext({});
 
 function App() {
