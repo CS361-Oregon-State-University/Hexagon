@@ -1,8 +1,6 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
-import ReactPlayer from 'react-player/youtube'
-import { useNavigate } from "react-router-dom";
-
+import ReactPlayer from "react-player/youtube";
 import { useNavigate } from "react-router-dom";
 
 type workoutCards = {

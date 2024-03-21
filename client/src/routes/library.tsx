@@ -24,8 +24,6 @@ const Library = () => {
 
   const [workouts, setWorkouts] = useState<workout[]>([]);
   const [isUserWorkingOut, setIsUserWorkingOut] = useState(false);
-  const [workouts, setWorkouts] = useState<workout[]>([]);
-  const [isUserWorkingOut, setIsUserWorkingOut] = useState(false);
   const [videoLinks, setVideoLink] = useState([]);
   useEffect(() => {
     axios.get<workout[]>("/getWorkouts").then((res) => {
