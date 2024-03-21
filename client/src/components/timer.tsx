@@ -1,59 +1,82 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
-export function MyTimer({ expiryTimestamp }) {
+interface MyTimerProps {
+  expiryTimestamp: Date;
+  onTimerFinish: () => void;
+}
+
+const MyTimer: React.FC<MyTimerProps> = ({
+  expiryTimestamp,
+  onTimerFinish,
+}) => {
   const {
     totalSeconds,
     seconds,
     minutes,
     hours,
-    days,
     isRunning,
-    start,
     pause,
     resume,
     restart,
   } = useTimer({
     expiryTimestamp,
-    onExpire: () => navigate("/workout-summary"),
+    onExpire: () => {
+      onTimerFinish();
+      navigate("/workout-summary");
+    },
   });
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isRunning) {
+      interval = setInterval(() => {
+        axios
+          .post("/updateWorkoutTime", { timeLeft: totalSeconds })
+          .then((res) => {
+            console.log("Time updated successfully.");
+          })
+          .catch((error) => {
+            console.error("Error updating time:", error);
+          });
+      }, 749); // Send update every 749 milliseconds
+    }
+
+    return () => clearInterval(interval);
+  }, [isRunning, totalSeconds]);
+
+  const restartTimer = () => {
+    axios.get("/calculateWorkoutTime").then((res) => {
+      const time = new Date();
+      time.setSeconds(time.getSeconds() + res.data);
+      restart(time);
+    });
+  };
+
   return (
     <div style={{ textAlign: "center" }}>
-      {/* <div className="countdown font-mono text-2xl">
-                    <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
-            </div> */}
       <div style={{ fontSize: "50px" }} className="m-6">
         <span>{hours < 10 ? "0" + hours : hours}</span>:
         <span>{minutes < 10 ? "0" + minutes : minutes}</span>:
         <span>{seconds < 10 ? "0" + seconds : seconds}</span>
       </div>
-      {/* <p>{isRunning ? 'Running' : 'Not running'}</p> */}
       <div className="join">
-        <button onClick={start} className="btn btn-neutral m-1">
-          Start
-        </button>
         <button onClick={pause} className="btn btn-neutral m-1">
           Pause
         </button>
         <button onClick={resume} className="btn btn-neutral m-1">
           Resume
         </button>
-        <button
-          onClick={() => {
-            // Restarts to 5 minutes timer
-            const time = new Date();
-            time.setSeconds(time.getSeconds() + 300);
-            restart(time);
-          }}
-          className="btn btn-neutral m-1"
-        >
+        <button onClick={restartTimer} className="btn btn-neutral m-1">
           Restart
         </button>
       </div>
     </div>
   );
-}
+};
+
+export default MyTimer;
